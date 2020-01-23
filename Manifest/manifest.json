@@ -1,0 +1,128 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.5",
+  "version": "1.0.0",
+  "id": "38e34b2e-5fcf-40e0-8e8c-90163aef3061",
+  "packageName": "<<package name>>",
+  "developer": {
+    "name": "<<company name>>",
+    "websiteUrl": "<<websiteUrl>>",
+    "privacyUrl": "<<privacyUrl>>",
+    "termsOfUseUrl": "<<termsOfUseUrl>>"
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "name": {
+    "short": "Expert Finder",
+    "full": "Expert Finder Bot"
+  },
+  "description": {
+    "short": "Expert Finder bot allows users to search for experts based on some attributes",
+    "full": "Expert Finder bot allows users to search for experts in an organization based on their skills, interests or schools attended. In addition, it also provides users the ability to update their profile information and keep it up to date. "
+  },
+  "accentColor": "#FEAE25",
+  "bots": [
+    {
+      "botId": "<<botId>>",
+      "scopes": [
+        "personal"
+      ],
+      "commandLists": [
+        {
+          "scopes": [
+            "personal"
+          ],
+          "commands": [
+            {
+              "title": "My profile",
+              "description": "My profile"
+            },
+            {
+              "title": "Search",
+              "description": "Search individuals"
+            }
+          ]
+        }
+      ],
+      "supportsFiles": false,
+      "isNotificationOnly": false
+    }
+  ],
+  "composeExtensions": [
+    {
+      "botId": "<<botId>>",
+      "canUpdateConfiguration": true,
+      "commands": [
+        {
+          "id": "skills",
+          "type": "query",
+          "title": "Skills",
+          "description": "Search experts on basis of skills",
+          "initialRun": true,
+          "fetchTask": false,
+          "context": [
+            "commandBox",
+            "compose"
+          ],
+          "parameters": [
+            {
+              "name": "skills",
+              "title": "Skills",
+              "description": "Search experts on basis of skills",
+              "inputType": "text"
+            }
+          ]
+        },
+        {
+          "id": "interests",
+          "type": "query",
+          "title": "Interests",
+          "description": "Search experts on basis of interest",
+          "initialRun": true,
+          "fetchTask": false,
+          "context": [
+            "commandBox",
+            "compose"
+          ],
+          "parameters": [
+            {
+              "name": "interests",
+              "title": "Interests",
+              "description": "Search experts on basis of interest",
+              "inputType": "text"
+            }
+          ]
+        },
+        {
+          "id": "schools",
+          "type": "query",
+          "title": "Schools",
+          "description": "Search experts on basis of schools",
+          "initialRun": true,
+          "fetchTask": false,
+          "context": [
+            "commandBox",
+            "compose"
+          ],
+          "parameters": [
+            {
+              "name": "schools",
+              "title": "Schools",
+              "description": "Search experts on basis of schools",
+              "inputType": "text"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    "<<validdomains>>"
+  ]
+}
