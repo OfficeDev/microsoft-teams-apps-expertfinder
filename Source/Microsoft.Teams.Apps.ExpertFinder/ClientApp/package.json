@@ -1,0 +1,51 @@
+{
+	"name": "expert-finder",
+	"version": "1.0.0",
+	"private": true,
+	"dependencies": {
+		"@microsoft/applicationinsights-react-js": "^2.3.1",
+		"@microsoft/teams-js": "^1.5.2",
+		"@stardust-ui/react": "^0.40.4",
+		"axios": "^0.19.0",
+		"msteams-ui-icons-react": "^0.4.2",
+		"node-sass": "^4.12.0",
+		"react": "^16.12.0",
+		"react-appinsights": "^3.0.0-rc.6",
+		"react-dom": "^16.12.0",
+		"react-router-dom": "^5.1.2",
+		"react-scripts": "3.3.0",
+		"typescript": "^3.7.4",
+		"typestyle": "^2.0.4"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"@testing-library/jest-dom": "^4.2.4",
+		"@testing-library/react": "^9.4.0",
+		"@testing-library/user-event": "^7.2.1",
+		"@types/jest": "^24.0.24",
+		"@types/node": "^12.12.21",
+		"@types/react": "^16.9.17",
+		"@types/react-dom": "^16.9.4",
+		"@types/react-router-dom": "^4.3.3"
+	}
+}
