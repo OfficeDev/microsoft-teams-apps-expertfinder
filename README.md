@@ -1,3 +1,13 @@
+---
+page_type: sample
+languages:
+- csharp
+products:
+- office-teams
+description: Expert Finder bot allows users to search for experts based on certain attributes
+urlFragment: microsoft-teams-apps-expertfinder
+---
+
 # Expert Finder App Template
 | [Documentation](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki) | [Deployment guide](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/Deployment-Guide)| [Architecture](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/Solution-Overview)
 |--|--|--|
@@ -5,22 +15,22 @@
 Expert Finder bot allows employees to search for other individuals in an organization based on their skills, interests and schools. In addition, it also provides users the ability to update their profile information and keep it up to date.
 
 **Expert Finder bot**
- - **My Profile**: Using this command users will be able to view their AAD profile information in a card. The card will have call to action buttons that will let them add or modify information in their AAD profile or view details about other attributes.
+ - **My Profile**: Using this command users will be able to view their Azure Active Directory profile information in a card. The card will have call to action buttons that will let them add or modify information in their Azure Active Directory profile or view details about other attributes.
  
-![MyProfileCard](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/images/MyProfileCard.png)
+![MyProfileCard](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/Images/MyProfileCard.png)
 
-![EditProfile](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/images/EditProfile.png)
+![EditProfile](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/Images/EditProfile.png)
 
  - **Search**: This command allows the users to search for experts within the organization whose attributes match with the search keyword. They will be able to select a max of 5 user profiles and view details pertaining to them.
 
-![SearchCard](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/images/SearchFeature.png)
+![SearchCard](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/Images/SearchFeature.png)
 
-![SearchTaskModule](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/images/SearchTaskModule.png)
+![SearchTaskModule](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/Images/SearchTaskModule.PNG)
  
  **Expert Finder messaging extension**
 Users can search for individuals within the organization whose attributes match the user search keyword using the messaging extension.
 
-![MessagingExtension](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/images/MessagingExtension.png)
+![MessagingExtension](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/Images/MessagingExtension.PNG)
 
 ## Legal Notices
 Please read the license terms applicable to this template [here](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/blob/master/LICENSE). In addition to these terms, you agree to the following:
@@ -34,7 +44,7 @@ Any Microsoft trademarks and logos included in this repository are property of M
 ## Getting Started
 Begin with the [Solution overview](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/Solution-Overview) to read about what the app does and how it works.
 
-When you're ready to try out Expert Finder Bot, or to use it in your own organization, follow the steps in the [Deployment guide](/wiki/Deployment-Guide).
+When you're ready to try out Expert Finder Bot, or to use it in your own organization, follow the steps in the [Deployment guide](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/Deployment-Guide).
 
 ## Feedback
 Thoughts? Questions? Ideas? Share them with us on [Teams UserVoice](https://microsoftteams.uservoice.com/forums/555103-public) !
