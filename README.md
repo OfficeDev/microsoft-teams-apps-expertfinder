@@ -8,7 +8,7 @@ description: Expert Finder bot allows users to search for experts based on certa
 urlFragment: microsoft-teams-apps-expertfinder
 ---
 
-# Expert Finder App Template
+# Expert Finder Bot App Template
 | [Documentation](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki) | [Deployment guide](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/Deployment-Guide)| [Architecture](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/Solution-Overview)
 |--|--|--|
 
@@ -44,7 +44,7 @@ Any Microsoft trademarks and logos included in this repository are property of M
 ## Getting Started
 Begin with the [Solution overview](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/Solution-Overview) to read about what the app does and how it works.
 
-When you're ready to try out Expert Finder Bot, or to use it in your own organization, follow the steps in the [Deployment guide](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/Deployment-Guide).
+When you're ready to try out Expert Finder bot, or to use it in your own organization, follow the steps in the [Deployment guide](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/Deployment-Guide).
 
 ## Feedback
 Thoughts? Questions? Ideas? Share them with us on [Teams UserVoice](https://microsoftteams.uservoice.com/forums/555103-public) !
