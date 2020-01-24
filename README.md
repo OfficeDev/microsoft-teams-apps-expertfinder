@@ -47,9 +47,9 @@ Begin with the [Solution overview](https://github.com/OfficeDev/microsoft-teams-
 When you're ready to try out Expert Finder bot, or to use it in your own organization, follow the steps in the [Deployment guide](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/wiki/Deployment-Guide).
 
 ## Feedback
-Thoughts? Questions? Ideas? Share them with us on [Teams UserVoice](https://microsoftteams.uservoice.com/forums/555103-public) !
+Thoughts? Questions? Ideas? Share them with us on [Teams UserVoice](https://microsoftteams.uservoice.com/forums/555103-public)!
 
-Please report bugs and other code issues [here](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/issues/new)
+Please report bugs and other code issues [here](https://github.com/OfficeDev/microsoft-teams-apps-expertfinder/issues/new).
 
 ## Contributing
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
