@@ -3,7 +3,7 @@
   "manifestVersion": "1.5",
   "version": "1.0.0",
   "id": "38e34b2e-5fcf-40e0-8e8c-90163aef3061",
-  "packageName": "<<package name>>",
+  "packageName": "com.microsoft.teams.expertfinder",
   "developer": {
     "name": "<<company name>>",
     "websiteUrl": "<<websiteUrl>>",
@@ -123,6 +123,7 @@
     "messageTeamMembers"
   ],
   "validDomains": [
+    "token.botframework.com",
     "<<validdomains>>"
   ]
 }
