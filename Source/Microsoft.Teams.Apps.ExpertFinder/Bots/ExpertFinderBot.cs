@@ -586,9 +586,17 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
         /// <returns>A task that represents typing indicator activity.</returns>
         private async Task SendTypingIndicatorAsync(ITurnContext turnContext)
         {
-            var typingActivity = turnContext.Activity.CreateReply(locale: CultureInfo.CurrentCulture.Name);
-            typingActivity.Type = ActivityTypes.Typing;
-            await turnContext.SendActivityAsync(typingActivity).ConfigureAwait(false);
+            try
+            {
+                var typingActivity = turnContext.Activity.CreateReply();
+                typingActivity.Type = ActivityTypes.Typing;
+                await turnContext.SendActivityAsync(typingActivity);
+            }
+            catch (Exception ex)
+            {
+                // Do not fail on errors sending the typing indicator
+                this.logger.LogWarning(ex, $"Failed to send a typing indicator: {ex.Message}");
+            }
         }
 
         /// <summary>
