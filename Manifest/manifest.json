@@ -53,7 +53,7 @@
   "composeExtensions": [
     {
       "botId": "<<botId>>",
-      "canUpdateConfiguration": true,
+      "canUpdateConfiguration": false,
       "commands": [
         {
           "id": "skills",
