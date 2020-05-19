@@ -127,6 +127,7 @@
     "messageTeamMembers"
   ],
   "validDomains": [
+    "token.botframework.com",
     "<<validdomains>>"
   ]
 }
