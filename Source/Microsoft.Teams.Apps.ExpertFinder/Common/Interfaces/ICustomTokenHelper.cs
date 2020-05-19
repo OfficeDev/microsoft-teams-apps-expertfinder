@@ -13,7 +13,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Common
     public interface ICustomTokenHelper
     {
         /// <summary>
-        /// Generate custom jwt access token to authenticate/verify valid request on api side.
+        /// Generate custom jwt access token to authenticate/verify valid request on API side.
         /// </summary>
         /// <param name="aadObjectId">User account's object id within Azure Active Directory.</param>
         /// <param name="serviceURL">Service uri where responses to this activity should be sent.</param>

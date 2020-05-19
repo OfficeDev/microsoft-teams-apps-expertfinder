@@ -1,4 +1,4 @@
-﻿// <copyright file="ConversationData.cs" company="Microsoft">
+﻿// <copyright file="UserData.cs" company="Microsoft">
 // Copyright (c) Microsoft. All rights reserved.
 // </copyright>
 
@@ -7,7 +7,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Models
     /// <summary>
     /// User conversation state model class.
     /// </summary>
-    public class ConversationData
+    public class UserData
     {
         /// <summary>
         /// Gets or sets a value indicating whether welcome card sent to user.

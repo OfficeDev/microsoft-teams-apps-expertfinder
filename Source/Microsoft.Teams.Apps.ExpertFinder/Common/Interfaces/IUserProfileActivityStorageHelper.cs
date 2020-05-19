@@ -17,7 +17,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Common.Interfaces
         /// </summary>
         /// <param name="userProfileConversatioEntity">Holds user profile activity id and card id to uniquely identify user activity that is being edited.</param>
         /// <returns>A <see cref="Task"/> of type bool where true represents user profile activity information is saved or updated.False indicates failure in saving data. </returns>
-        Task<bool> UpsertConverationStateAsync(UserProfileActivityInfo userProfileConversatioEntity);
+        Task<bool> UpsertUserProfileConversationDataAsync(UserProfileActivityInfo userProfileConversatioEntity);
 
         /// <summary>
         /// Get user profile card activity id and user profile card id from table storage based on user profile card id.

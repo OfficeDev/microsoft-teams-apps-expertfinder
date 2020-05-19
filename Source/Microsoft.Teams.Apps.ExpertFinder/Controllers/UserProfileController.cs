@@ -7,13 +7,11 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Controllers
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.ApplicationInsights;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
-    using Microsoft.Teams.Apps.ExpertFinder.Common;
     using Microsoft.Teams.Apps.ExpertFinder.Common.Interfaces;
     using Microsoft.Teams.Apps.ExpertFinder.Models.Configuration;
     using Microsoft.Teams.Apps.ExpertFinder.Models.SharePoint;
@@ -32,12 +30,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Controllers
         private readonly ITokenHelper tokenHelper;
 
         /// <summary>
-        /// Helper for custom JWT token generation, token validation and acquiring token for given resource.
-        /// </summary>
-        private readonly ICustomTokenHelper customTokenHelper;
-
-        /// <summary>
-        /// Instance of SharePoint search rest api helper.
+        /// Instance of SharePoint search REST API helper.
         /// </summary>
         private readonly ISharePointApiHelper sharePointApiHelper;
 
@@ -54,17 +47,15 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="UserProfileController"/> class.
         /// </summary>
-        /// <param name="sharePointApiHelper">Instance of SharePoint search rest api helper.</param>
+        /// <param name="sharePointApiHelper">Instance of SharePoint search REST API helper.</param>
         /// <param name="tokenHelper">Instance of class for validating custom jwt access token.</param>
-        /// <param name="customTokenHelper">Instance of class for validating AAD access token.</param>
-        /// <param name="optionsAccessor">A set of key/value application configuration properties for SharePoint rest api.</param>
+        /// <param name="botSettings">A set of key/value application configuration properties.</param>
         /// <param name="logger">Instance to send logs to the Application Insights service.</param>
-        public UserProfileController(ISharePointApiHelper sharePointApiHelper, ITokenHelper tokenHelper, ICustomTokenHelper customTokenHelper, IOptionsMonitor<SharePointSettings> optionsAccessor, ILogger<UserProfileController> logger)
+        public UserProfileController(ISharePointApiHelper sharePointApiHelper, ITokenHelper tokenHelper, IOptionsMonitor<BotSettings> botSettings, ILogger<UserProfileController> logger)
         {
             this.sharePointApiHelper = sharePointApiHelper;
             this.tokenHelper = tokenHelper;
-            this.sharePointSiteUri = optionsAccessor.CurrentValue.SharePointSiteUrl;
-            this.customTokenHelper = customTokenHelper;
+            this.sharePointSiteUri = botSettings.CurrentValue.SharePointSiteUrl;
             this.logger = logger;
         }
 

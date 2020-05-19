@@ -64,12 +64,12 @@
         "description": "SharePoint site URL."
       }
     },
-    "tokenEncryptionKey": {
+    "tokenSigningKey": {
       "type": "string",
       "minLength": 13,
       "defaultValue": "[concat(uniqueString(newGuid()), uniqueString(newGuid()))]",
       "metadata": {
-        "description": "A secret used to further encrypt stored tokens at rest."
+        "description": "A secret used to sign the JWT authenticating the task module."
       }
     },
     "sku": {
@@ -200,7 +200,7 @@
               "value": "[parameters('botClientSecret')]"
             },
             {
-              "name": "ConnectionName",
+              "name": "OAuthConnectionName",
               "value": "ExpertFinderAuth"
             },
             {
@@ -224,8 +224,8 @@
               "value": "[parameters('sharePointSiteUrl')]"
             },
             {
-              "name": "SecurityKey",
-              "value": "[parameters('tokenEncryptionKey')]"
+              "name": "TokenSigningKey",
+              "value": "[parameters('tokenSigningKey')]"
             },
             {
               "name": "WEBSITE_NODE_DEFAULT_VERSION",

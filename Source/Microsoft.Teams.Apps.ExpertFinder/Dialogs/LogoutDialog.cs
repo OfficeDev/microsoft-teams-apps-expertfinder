@@ -4,6 +4,7 @@
 
 namespace Microsoft.Teams.Apps.ExpertFinder.Dialogs
 {
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Bot.Builder;
@@ -19,10 +20,10 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Dialogs
         /// <summary>
         /// Text that triggers logout action.
         /// </summary>
-        private const string LogoutCommand = "LOGOUT";
+        private static readonly ISet<string> LogoutCommands = new HashSet<string> { "LOGOUT", "SIGNOUT", "LOG OUT", "SIGN OUT" };
 
         /// <summary>
-        /// AADv1 bot connection name.
+        /// Bot OAuth connection name.
         /// </summary>
         private readonly string connectionName;
 
@@ -91,7 +92,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Dialogs
                 return null;
             }
 
-            if (text.ToUpperInvariant().Trim() == LogoutCommand)
+            if (LogoutCommands.Contains(text.ToUpperInvariant().Trim()))
             {
                 // The bot adapter encapsulates the authentication processes.
                 var botAdapter = (BotFrameworkAdapter)dialogContext.Context.Adapter;

@@ -423,6 +423,9 @@ _[Ss]cripts
 *.nupkg
 *.ncrunchsolution
 *.dot[Cc]over
+
+/Source/.vs
 /Source/Microsoft.Teams.Apps.ExpertFinder/ClientApp/node_modules
-/Source/.vs/Microsoft.Teams.Apps.ExpertFinder/v16/Server/sqlite3
 /Source/Microsoft.Teams.Apps.ExpertFinder/wwwroot/dist
+/Source/Microsoft.Teams.Apps.ExpertFinder/ClientApp/build/
+/Source/Microsoft.Teams.Apps.ExpertFinder/.config

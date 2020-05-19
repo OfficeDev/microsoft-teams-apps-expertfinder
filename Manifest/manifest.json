@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
   "manifestVersion": "1.5",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "id": "38e34b2e-5fcf-40e0-8e8c-90163aef3061",
   "packageName": "com.microsoft.teams.expertfinder",
   "developer": {
@@ -16,11 +16,11 @@
   },
   "name": {
     "short": "Expert Finder",
-    "full": "Expert Finder Bot"
+    "full": "Expert Finder"
   },
   "description": {
-    "short": "Expert Finder bot allows users to search for experts based on some attributes",
-    "full": "Expert Finder bot allows users to search for experts in an organization based on their skills, interests or schools attended. In addition, it also provides users the ability to update their profile information and keep it up to date. "
+    "short": "Expert Finder lets users search for experts based on some attributes",
+    "full": "Expert Finder lets users search for experts in an organization based on their skills, interests or schools attended. In addition, it also provides users the ability to update their profile information and keep it up to date. "
   },
   "accentColor": "#FEAE25",
   "bots": [
@@ -42,6 +42,10 @@
             {
               "title": "Search",
               "description": "Search individuals"
+            },
+            {
+              "title": "Logout",
+              "description": "Sign out of Expert Finder"
             }
           ]
         }

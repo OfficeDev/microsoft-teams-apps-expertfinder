@@ -6,6 +6,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net.Http;
     using System.Text;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -56,27 +57,32 @@ namespace Microsoft.Teams.Apps.ExpertFinder
             services.AddHttpClient<ISharePointApiHelper, SharePointApiHelper>().AddPolicyHandler(GetRetryPolicy());
             services.AddHttpClient<IGraphApiHelper, GraphApiHelper>().AddPolicyHandler(GetRetryPolicy());
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.Configure<AADSettings>(this.Configuration);
-            services.Configure<SharePointSettings>(this.Configuration);
-            services.Configure<TokenSettings>(this.Configuration);
-            services.Configure<StorageSettings>(this.Configuration);
-            services.Configure<BotSettings>(this.Configuration);
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
+            services.Configure<BotSettings>(options =>
             {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateAudience = true,
-                    ValidAudiences = new List<string> { this.Configuration["AppBaseUri"] },
-                    ValidIssuers = new List<string> { this.Configuration["AppBaseUri"] },
-                    ValidateIssuer = true,
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(this.Configuration["SecurityKey"])),
-                    RequireExpirationTime = true,
-                    ValidateLifetime = true,
-                    ClockSkew = TimeSpan.FromSeconds(30),
-                };
+                options.AppBaseUri = this.Configuration["AppBaseUri"];
+                options.AppInsightsInstrumentationKey = this.Configuration["APPINSIGHTS_INSTRUMENTATIONKEY"];
+                options.OAuthConnectionName = this.GetFirstSetting("OAuthConnectionName", "ConnectionName");
+                options.SharePointSiteUrl = this.Configuration["SharePointSiteUrl"];
+                options.TenantId = this.Configuration["TenantId"];
+                options.TokenSigningKey = this.GetFirstSetting("TokenSigningKey", "SecurityKey");
+                options.StorageConnectionString = this.Configuration["StorageConnectionString"];
             });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = true,
+                        ValidAudiences = new List<string> { this.Configuration["AppBaseUri"] },
+                        ValidIssuers = new List<string> { this.Configuration["AppBaseUri"] },
+                        ValidateIssuer = true,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(this.GetFirstSetting("TokenSigningKey", "SecurityKey"))),
+                        RequireExpirationTime = true,
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.FromSeconds(30),
+                    };
+                });
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -112,7 +118,8 @@ namespace Microsoft.Teams.Apps.ExpertFinder
             services.AddSingleton(new OAuthClient(new MicrosoftAppCredentials(this.Configuration["MicrosoftAppId"], this.Configuration["MicrosoftAppPassword"])));
 
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
-            services.AddTransient<IBot, ExpertFinderBot<MainDialog>>();
+            services.AddTransient<IBot, ExpertFinderBot>();
+            services.AddApplicationInsightsTelemetry();
         }
 
         /// <summary>
@@ -160,6 +167,16 @@ namespace Microsoft.Teams.Apps.ExpertFinder
                 .HandleTransientHttpError()
                 .OrResult(response => response.IsSuccessStatusCode == false)
                 .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+        }
+
+        /// <summary>
+        /// Find the first configuration value in the list that is not null or empty.
+        /// </summary>
+        /// <param name="keys">List of keys to check.</param>
+        /// <returns>First configuration value that is not null or empty.</returns>
+        private string GetFirstSetting(params string[] keys)
+        {
+            return keys.Select(key => this.Configuration[key]).Where(value => !string.IsNullOrEmpty(value)).FirstOrDefault();
         }
     }
 }

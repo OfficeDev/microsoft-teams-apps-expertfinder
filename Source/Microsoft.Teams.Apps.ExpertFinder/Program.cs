@@ -6,7 +6,6 @@ namespace Microsoft.Teams.Apps.ExpertFinder
 {
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Logging;
 
     /// <summary>
     /// Program class.
@@ -29,12 +28,6 @@ namespace Microsoft.Teams.Apps.ExpertFinder
         /// <returns>Web host builder.</returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-             .ConfigureLogging((hostingContext, logging) =>
-             {
-                 // hostingContext.HostingEnvironment can be used to determine environments as well.
-                 var appInsightKey = hostingContext.Configuration["AppInsightsInstrumentationKey"];
-                 logging.AddApplicationInsights(appInsightKey);
-             });
+                .UseStartup<Startup>();
     }
 }

@@ -41,33 +41,23 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Common
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserProfileActivityStorageHelper"/> class.
-        /// Handles Microsoft Azure Table read write operations.
         /// </summary>
-        /// <param name="configuration">Object that passes the application configuration key-values.</param>
-        /// <param name="optionsAccessor">A set of key/value application configuration properties for Azure Table storage.</param>
-        public UserProfileActivityStorageHelper(IOptionsMonitor<StorageSettings> optionsAccessor)
+        /// <param name="botSettings">A set of key/value application configuration properties.</param>
+        public UserProfileActivityStorageHelper(IOptionsMonitor<BotSettings> botSettings)
         {
             this.initializeTask = new Lazy<Task>(() => this.InitializeAsync());
-            this.connectionString = optionsAccessor.CurrentValue.StorageConnectionString;
+            this.connectionString = botSettings.CurrentValue.StorageConnectionString;
             this.tableName = "UserProfileActivityInfo";
         }
 
-        /// <summary>
-        /// Stores or update user profile card activity id and user profile card id in table storage.
-        /// </summary>
-        /// <param name="userProfileConversationEntity">Holds user profile activity id and card id to uniquely identify user activity that is being edited.</param>
-        /// <returns>A task that represents user profile conversation data is saved or updated.</returns>
-        public async Task<bool> UpsertConverationStateAsync(UserProfileActivityInfo userProfileConversationEntity)
+        /// <inheritdoc/>
+        public async Task<bool> UpsertUserProfileConversationDataAsync(UserProfileActivityInfo userProfileConversationEntity)
         {
             var result = await this.StoreOrUpdateEntityAsync(userProfileConversationEntity).ConfigureAwait(false);
             return result.HttpStatusCode == (int)HttpStatusCode.NoContent;
         }
 
-        /// <summary>
-        /// Get user profile card activity id and user profile card id from table storage based on user profile card id.
-        /// </summary>
-        /// <param name="myProfileCardId">Unique user profile card id.</param>
-        /// <returns>A task that represent object to hold user profile card activity id and user profile card id.</returns>
+        /// <inheritdoc/>
         public async Task<UserProfileActivityInfo> GetUserProfileConversationDataAsync(string myProfileCardId)
         {
             TableResult searchResult;
