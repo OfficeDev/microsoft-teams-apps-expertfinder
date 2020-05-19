@@ -4,7 +4,6 @@
 
 namespace Microsoft.Teams.Apps.ExpertFinder.Common
 {
-    using System;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Text;
@@ -15,18 +14,17 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Common
     using Newtonsoft.Json;
 
     /// <summary>
-    /// The class that represent the helper methods to access Microsoft Graph api.
+    /// The class that represent the helper methods to access Microsoft Graph API.
     /// </summary>
     public class GraphApiHelper : IGraphApiHelper
     {
         /// <summary>
-        /// Post user details to api request url.
+        /// Post user details to API request url.
         /// </summary>
         private const string UserProfileGraphEndpointUrl = "https://graph.microsoft.com/v1.0/me";
 
         /// <summary>
         /// Provides a base class for sending HTTP requests and receiving HTTP responses from a resource identified by a URI.
-        /// </summary>
         /// </summary>
         private readonly HttpClient client;
 
@@ -46,79 +44,51 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Common
             this.logger = logger;
         }
 
-        /// <summary>
-        /// Call Microsoft Graph api to work with user profile details.
-        /// </summary>
-        /// <param name="token">Microsoft Graph api user access token.</param>
-        /// <param name="body">User graph api request body.</param>
-        /// <returns>A task that represents a HTTP response message including the status code and data.</returns>
-        /// <remark>Reference link for Graph api used for updating user profile is"https://docs.microsoft.com/en-us/graph/api/user-update?view=graph-rest-beta&tabs=http".</remark>
+        /// <inheritdoc/>
         public async Task<bool> UpdateUserProfileDetailsAsync(string token, string body)
         {
-            string requestUrl = UserProfileGraphEndpointUrl;
-            HttpMethod httpMethod = new HttpMethod("PATCH");
-            var request = new HttpRequestMessage(httpMethod, requestUrl);
-
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-            request.Content = new StringContent(body, Encoding.UTF8, "application/json");
-            var userProfileUpdateResponse = await this.client.SendAsync(request).ConfigureAwait(false);
-
-            if (userProfileUpdateResponse.IsSuccessStatusCode)
+            using (var request = new HttpRequestMessage(HttpMethod.Patch, UserProfileGraphEndpointUrl))
             {
-                return true;
-            }
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                request.Content = new StringContent(body, Encoding.UTF8, "application/json");
 
-            var errorMessage = await userProfileUpdateResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-            this.logger.LogInformation($"Graph api user profile update error- {errorMessage}");
-            return false;
+                using (var userProfileUpdateResponse = await this.client.SendAsync(request).ConfigureAwait(false))
+                {
+                    if (userProfileUpdateResponse.IsSuccessStatusCode)
+                    {
+                        return true;
+                    }
+
+                    var errorMessage = await userProfileUpdateResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    this.logger.LogInformation($"Graph API user profile update error: {errorMessage}");
+
+                    return false;
+                }
+            }
         }
 
-        /// <summary>
-        /// Get user profile details from Microsoft Graph.
-        /// </summary>
-        /// <param name="token">Microsoft Graph user access token.</param>
-        /// <returns>User profile details.</returns>
+        /// <inheritdoc/>
         public async Task<UserProfileDetail> GetUserProfileAsync(string token)
         {
-            var response = await this.GetUserProfileDetailsAsync(token, $"{UserProfileGraphEndpointUrl}?$select=id,displayname,jobTitle,aboutme,skills,interests,schools").ConfigureAwait(false);
-
-            if (response.IsSuccessStatusCode)
+            using (var request = new HttpRequestMessage(HttpMethod.Get, $"{UserProfileGraphEndpointUrl}?$select=id,displayname,jobTitle,aboutme,skills,interests,schools"))
             {
-                return await this.DeserializeJsonStringAsync<UserProfileDetail>(response).ConfigureAwait(false);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                using (var response = await this.client.SendAsync(request).ConfigureAwait(false))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        return JsonConvert.DeserializeObject<UserProfileDetail>(json);
+                    }
+
+                    var errorMessage = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    this.logger.LogInformation($"Error getting user profile from Graph: {errorMessage}");
+
+                    return null;
+                }
             }
-
-            var errorMessage = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            this.logger.LogInformation($"Graph api getting user profile error- {errorMessage}");
-            return null;
-        }
-
-        /// <summary>
-        /// Get user profile detail from Microsoft Graph api.
-        /// </summary>
-        /// <param name="token">Microsoft Graph api user access token.</param>
-        /// <param name="requestUrl">Microsoft Graph user profile request api uri.</param>
-        /// <returns>A task that represents a HTTP response message including the status code and data.</returns>
-        private async Task<HttpResponseMessage> GetUserProfileDetailsAsync(string token, string requestUrl)
-        {
-            HttpMethod httpMethod = new HttpMethod("GET");
-            var request = new HttpRequestMessage(httpMethod, requestUrl);
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-            return await this.client.SendAsync(request).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deserialize the response from HTTP response data.
-        /// </summary>
-        /// <typeparam name="T">Model to deserialize data.</typeparam>
-        /// <param name="response">Represents a HTTP response message including the status code and data.</param>
-        /// <returns>Deserialized HTTP response data.</returns>
-        private async Task<T> DeserializeJsonStringAsync<T>(HttpResponseMessage response)
-            where T : class
-        {
-            return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
         }
     }
 }

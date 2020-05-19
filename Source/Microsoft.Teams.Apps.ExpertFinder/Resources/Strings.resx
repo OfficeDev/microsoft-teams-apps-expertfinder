@@ -169,7 +169,7 @@
     <value>Filter for individuals by skills, interests, and other attributes in their profiles.</value>
     <comment>Welcome card text for Search command</comment>
   </data>
-  <data name="WelocmeText" xml:space="preserve">
+  <data name="WelcomeText" xml:space="preserve">
     <value>Welcome!</value>
     <comment>Welcome card header text</comment>
   </data>
@@ -177,7 +177,7 @@
     <value>Click **Search** to filter for individuals by skills, interests, and other attributes in their profiles.</value>
     <comment>Suggestive text on card that invokes Search dialog task module</comment>
   </data>
-  <data name="NotLoginText" xml:space="preserve">
+  <data name="NotLoggedInText" xml:space="preserve">
     <value>To search for experts, you’ll need to sign in.</value>
     <comment>Text to show if user is not logged in.</comment>
   </data>
@@ -217,7 +217,7 @@
     <value>Login is successful!</value>
     <comment>Text to show when login is successful</comment>
   </data>
-  <data name="SigninCardText" xml:space="preserve">
+  <data name="SignInCardText" xml:space="preserve">
     <value>To search for experts, you’ll need to sign in.</value>
     <comment>Text to show on sign in card</comment>
   </data>
@@ -225,7 +225,7 @@
     <value>You have been signed out.</value>
     <comment>Text to show when user is signed out.</comment>
   </data>
-  <data name="SignInBtnText" xml:space="preserve">
+  <data name="SignInButtonText" xml:space="preserve">
     <value>Sign in</value>
     <comment>Text to show on Sign in button in sign in card.</comment>
   </data>
@@ -238,7 +238,7 @@
     <comment>Text for error message when updating user profile api failed</comment>
   </data>
   <data name="HelpMessage" xml:space="preserve">
-    <value>I can support below commands.</value>
+    <value>I can help you find people in your organization with specific expertise and skills. Here’s what you can do:</value>
     <comment>Text to show on help card.</comment>
   </data>
   <data name="InterestsPlaceHolderText" xml:space="preserve">
@@ -250,7 +250,7 @@
     <comment>Task module title that allows user to search for experts within the organization</comment>
   </data>
   <data name="InvalidTenant" xml:space="preserve">
-    <value>Unauthorized tenant detected.</value>
+    <value>Sorry! You don't seem to be a user in the organization for which I was set up.</value>
     <comment>Message to be shown if tenant id doesn't match with authorized tenant</comment>
   </data>
   <data name="MyProfileWelcomeCardContent" xml:space="preserve">

@@ -6,9 +6,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
-    using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Bot.Builder;
@@ -47,7 +45,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder
         private const string SignInActivityName = "signin/verifyState";
 
         /// <summary>
-        /// Helper for working with Microsoft Graph api.
+        /// Helper for working with Microsoft Graph API.
         /// </summary>
         private readonly IGraphApiHelper graphApiHelper;
 
@@ -64,12 +62,12 @@ namespace Microsoft.Teams.Apps.ExpertFinder
         /// <summary>
         /// Initializes a new instance of the <see cref="MainDialog"/> class.
         /// </summary>
-        /// <param name="graphApiHelper">Helper for working with Microsoft Graph api.</param>
+        /// <param name="graphApiHelper">Helper for working with Microsoft Graph API.</param>
         /// <param name="storageHelper">Helper for working with Microsoft Azure Table storage service.</param>
-        /// <param name="optionsAccessor">A set of key/value application configuration properties for AADv1 connection name.</param>
+        /// <param name="botSettings">A set of key/value application configuration properties.</param>
         /// <param name="logger">Instance to send logs to the Application Insights service.</param>
-        public MainDialog(IGraphApiHelper graphApiHelper, IUserProfileActivityStorageHelper storageHelper, IOptionsMonitor<AADSettings> optionsAccessor, ILogger<MainDialog> logger)
-            : base(nameof(MainDialog), optionsAccessor.CurrentValue.ConnectionName)
+        public MainDialog(IGraphApiHelper graphApiHelper, IUserProfileActivityStorageHelper storageHelper, IOptionsMonitor<BotSettings> botSettings, ILogger<MainDialog> logger)
+            : base(nameof(MainDialog), botSettings.CurrentValue.OAuthConnectionName)
         {
             this.graphApiHelper = graphApiHelper;
             this.storageHelper = storageHelper;
@@ -79,18 +77,45 @@ namespace Microsoft.Teams.Apps.ExpertFinder
                 nameof(OAuthPrompt),
                 new OAuthPromptSettings
                 {
-                    ConnectionName = optionsAccessor.CurrentValue.ConnectionName,
-                    Text = Strings.SigninCardText,
-                    Title = Strings.SignInBtnText,
-                    Timeout = Convert.ToInt32(TimeSpan.FromMinutes(5).TotalMilliseconds), // In milliseconds
+                    ConnectionName = botSettings.CurrentValue.OAuthConnectionName,
+                    Text = Strings.SignInCardText,
+                    Title = Strings.SignInButtonText,
+                    Timeout = (int)TimeSpan.FromMinutes(5).TotalMilliseconds,
                 }));
 
             this.AddDialog(new WaterfallDialog(
-                nameof(WaterfallDialog),
-                new WaterfallStep[] { this.OAuthPromptStepAsync, this.MyProfileAndSearchAsync }));
+                "MainDialog",
+                new WaterfallStep[] { this.CheckForUnknownInputAsync, this.OAuthPromptStepAsync, this.MyProfileAndSearchAsync }));
 
             // The initial child Dialog to run.
-            this.InitialDialogId = nameof(WaterfallDialog);
+            this.InitialDialogId = "MainDialog";
+        }
+
+        /// <summary>
+        /// Check for unknown input, and show the help prompt.
+        /// </summary>
+        /// <param name="stepContext">Provides context for a step in a bot dialog.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Tracking task.</returns>
+        private async Task<DialogTurnResult> CheckForUnknownInputAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        {
+            var activity = stepContext.Context.Activity;
+            if (activity.Type == ActivityTypes.Message)
+            {
+                switch (activity.Text?.Trim())
+                {
+                    case Constants.MyProfile:
+                    case Constants.Search:
+                    case null:
+                        return await stepContext.NextAsync();
+
+                    default:
+                        await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(HelpCard.GetHelpCard())).ConfigureAwait(false);
+                        return await stepContext.EndDialogAsync().ConfigureAwait(false);
+                }
+            }
+
+            return await stepContext.NextAsync();
         }
 
         /// <summary>
@@ -98,17 +123,18 @@ namespace Microsoft.Teams.Apps.ExpertFinder
         /// </summary>
         /// <param name="stepContext">Provides context for a step in a bot dialog.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>A task that reprents token on successfull authentication.</returns>
+        /// <returns>Tracking task.</returns>
         private async Task<DialogTurnResult> OAuthPromptStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             var activity = stepContext.Context.Activity;
+
             stepContext.Values["command"] = activity.Text?.Trim();
             if (activity.Text == null && activity.Value != null && activity.Type == MessageActivityType)
             {
                 stepContext.Values["command"] = JToken.Parse(activity.Value.ToString()).SelectToken("command").ToString();
             }
 
-            this.logger.LogInformation($"Sign-in card is send for conversation id :  {activity.Conversation.Id}.");
+            this.logger.LogInformation($"Sent sign-in card for conversation id: {activity.Conversation.Id}");
             return await stepContext.BeginDialogAsync(nameof(OAuthPrompt), null, cancellationToken).ConfigureAwait(false);
         }
 
@@ -117,20 +143,20 @@ namespace Microsoft.Teams.Apps.ExpertFinder
         /// </summary>
         /// <param name="stepContext">Provides context for a step in a bot dialog.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>User profile or search or edit profile based on activity type.</returns>
+        /// <returns>Tracking task.</returns>
         private async Task<DialogTurnResult> MyProfileAndSearchAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            var tokenResponse = (TokenResponse)stepContext.Result;
             var activity = stepContext.Context.Activity;
 
+            var tokenResponse = (TokenResponse)stepContext.Result;
             if (tokenResponse == null)
             {
                 this.logger.LogInformation($"User is not authenticated and token is null for: {activity.Conversation.Id}.");
-                await stepContext.Context.SendActivityAsync(Strings.NotLoginText).ConfigureAwait(false);
-                return await stepContext.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                await stepContext.Context.SendActivityAsync(Strings.NotLoggedInText).ConfigureAwait(false);
+                return await stepContext.EndDialogAsync().ConfigureAwait(false);
             }
 
-            var token = tokenResponse.Token.ToString(CultureInfo.InvariantCulture);
+            var token = tokenResponse.Token;
 
             // signin/verifyState activity name used here to send my profile card after successful sign in.
             if ((activity.Type == MessageActivityType) || (activity.Name == SignInActivityName))
@@ -140,19 +166,17 @@ namespace Microsoft.Teams.Apps.ExpertFinder
                 switch (command)
                 {
                     case Constants.MyProfile:
-                        this.logger.LogInformation("my profile command triggered", new Dictionary<string, string>() { { "User", activity.From.Id }, { "AADObjectId", activity.From.AadObjectId } });
+                        this.logger.LogInformation("My profile command triggered", new Dictionary<string, string>() { { "User", activity.From.Id }, { "AADObjectId", activity.From.AadObjectId } });
                         await this.MyProfileAsync(token, stepContext, cancellationToken).ConfigureAwait(false);
                         break;
                     case Constants.Search:
-                        this.logger.LogInformation("Search command triggered.", new Dictionary<string, string>() { { "User", activity.From.Id }, { "AADObjectId", activity.From.AadObjectId } });
+                        this.logger.LogInformation("Search command triggered", new Dictionary<string, string>() { { "User", activity.From.Id }, { "AADObjectId", activity.From.AadObjectId } });
                         await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(SearchCard.GetSearchCard())).ConfigureAwait(false);
                         break;
                     default:
                         await this.EditProfileAsync(token, stepContext, cancellationToken).ConfigureAwait(false);
                         break;
                 }
-
-                return await stepContext.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             }
 
             // submit-invoke request at edit profile
@@ -161,7 +185,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder
                 await this.EditProfileAsync(token, stepContext, cancellationToken).ConfigureAwait(false);
             }
 
-            return await stepContext.EndDialogAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            return await stepContext.EndDialogAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -170,34 +194,36 @@ namespace Microsoft.Teams.Apps.ExpertFinder
         /// <param name="token">User access token.</param>
         /// <param name="stepContext">Provides context for a step in a bot dialog.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>A task that returns user profile card attachment.</returns>
+        /// <returns>Tracking task.</returns>
         private async Task MyProfileAsync(string token, WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             try
             {
+                var activity = stepContext.Context.Activity;
+                IMessageActivity myProfileCardActivity;
+
                 var userProfileDetails = await this.graphApiHelper.GetUserProfileAsync(token).ConfigureAwait(false);
                 var userProfileCardId = Guid.NewGuid().ToString();
-                IMessageActivity myProfileCardActivity;
-                var activity = stepContext.Context.Activity;
 
                 if (userProfileDetails != null)
                 {
-                    this.logger.LogInformation($"User Profile obtained from graph api for: {activity.Conversation.Id}.");
+                    this.logger.LogInformation($"User profile obtained from Graph for: {activity.Conversation.Id}.");
                     myProfileCardActivity = MessageFactory.Attachment(MyProfileCard.GetMyProfileCard(userProfileDetails, userProfileCardId));
                 }
                 else
                 {
-                    this.logger.LogInformation($"User Profile obtained from graph api is null for: {activity.Conversation.Id}.");
+                    this.logger.LogInformation($"User profile obtained from Graph API is null for: {activity.Conversation.Id}.");
                     myProfileCardActivity = MessageFactory.Attachment(MyProfileCard.GetEmptyUserProfileCard(userProfileCardId));
                 }
 
                 var myProfileCardActivityResponse = await stepContext.Context.SendActivityAsync(myProfileCardActivity, cancellationToken).ConfigureAwait(false);
                 await this.StoreUserProfileCardActivityInfoAsync(myProfileCardActivityResponse.Id, userProfileCardId, stepContext.Context).ConfigureAwait(false);
-                this.logger.LogInformation("profile updated by user.", new Dictionary<string, string>() { { "User", activity.From.Id }, { "AADObjectId", activity.From.AadObjectId } });
+
+                this.logger.LogInformation("Profile sent to user", new Dictionary<string, string>() { { "User", activity.From.Id }, { "AADObjectId", activity.From.AadObjectId } });
             }
             catch (Exception ex)
             {
-                this.logger.LogError(ex, $"Error occured while executing MyProfile:  {stepContext.Context.Activity.Conversation.Id}.");
+                this.logger.LogError(ex, $"Error occured while executing My profile:  {stepContext.Context.Activity.Conversation.Id}.");
             }
         }
 
@@ -207,7 +233,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder
         /// <param name="token">User access token.</param>
         /// <param name="stepContext">Provides context for a step in a bot dialog.</param>
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <returns>A task that returns edit user profile card attachment.</returns>
+        /// <returns>Tracking task.</returns>
         private async Task EditProfileAsync(string token, WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             try
@@ -246,10 +272,10 @@ namespace Microsoft.Teams.Apps.ExpertFinder
                 if (!isUserProfileUpdated)
                 {
                     await stepContext.Context.SendActivityAsync(Strings.FailedToUpdateProfile).ConfigureAwait(false);
-                    this.logger.LogInformation($"Failure in saving data from task module to api for: {activity.Conversation.Id}.");
+                    this.logger.LogInformation($"Failure in saving data from task module to API for: {activity.Conversation.Id}.");
                 }
 
-                this.logger.LogInformation($"User profile updated using graph api for conversation id :  {activity.Conversation.Id}.");
+                this.logger.LogInformation($"User profile updated using Graph API for conversation id: {activity.Conversation.Id}.");
 
                 var userProfileCardId = ((JObject)activity.Value).GetValue("data", StringComparison.OrdinalIgnoreCase)["MyProfileCardId"].ToString();
                 var userDetailsfromApi = await this.graphApiHelper.GetUserProfileAsync(token).ConfigureAwait(false);
@@ -262,8 +288,8 @@ namespace Microsoft.Teams.Apps.ExpertFinder
             }
             catch (Exception ex)
             {
-                this.logger.LogError(ex, $"Error occured while posting my profile data to api for:  {stepContext.Context.Activity.Conversation.Id}.");
-                await stepContext.Context.SendActivityAsync($"{Strings.ErrorMessage}").ConfigureAwait(false);
+                this.logger.LogError(ex, $"Error occured while posting my profile data to API for: {stepContext.Context.Activity.Conversation.Id}.");
+                await stepContext.Context.SendActivityAsync(Strings.ErrorMessage).ConfigureAwait(false);
             }
         }
 
@@ -273,7 +299,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder
         /// <param name="myProfileCardActivityId">User profile card activity id.</param>
         /// <param name="myProfileCardId">Custom unique user profile card id.</param>
         /// <param name="turnContext">Provides context for a turn of a bot.</param>
-        /// <returns>A task that represents the work queued to execute.</returns>
+        /// <returns>Tracking task.</returns>
         private async Task StoreUserProfileCardActivityInfoAsync(string myProfileCardActivityId, string myProfileCardId, ITurnContext turnContext)
         {
             string conversationId = turnContext.Activity.Conversation.Id;
@@ -285,10 +311,10 @@ namespace Microsoft.Teams.Apps.ExpertFinder
                     MyProfileCardId = myProfileCardId,
                 };
 
-                var isUserActivityInfoSaved = await this.storageHelper.UpsertConverationStateAsync(userProfileActivityEntity).ConfigureAwait(false);
+                var isUserActivityInfoSaved = await this.storageHelper.UpsertUserProfileConversationDataAsync(userProfileActivityEntity).ConfigureAwait(false);
                 if (!isUserActivityInfoSaved)
                 {
-                    await turnContext.SendActivityAsync($"{Strings.ErrorMessage}").ConfigureAwait(false);
+                    await turnContext.SendActivityAsync(Strings.ErrorMessage).ConfigureAwait(false);
                     this.logger.LogInformation($"Saving data to table storage failed for: {conversationId}.");
                 }
             }

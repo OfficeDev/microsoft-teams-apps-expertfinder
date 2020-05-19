@@ -53,7 +53,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Cards
                                     {
                                         Size = AdaptiveTextSize.Large,
                                         Wrap = true,
-                                        Text = Strings.WelocmeText,
+                                        Text = Strings.WelcomeText,
                                         Weight = AdaptiveTextWeight.Bolder,
                                     },
                                     new AdaptiveTextBlock

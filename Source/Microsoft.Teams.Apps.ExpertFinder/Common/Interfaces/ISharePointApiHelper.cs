@@ -9,7 +9,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Common.Interfaces
     using Microsoft.Teams.Apps.ExpertFinder.Models.SharePoint;
 
     /// <summary>
-    /// Handles api calls for SharePoint to get user details based on query.
+    /// Handles API calls for SharePoint to get user details based on query.
     /// </summary>
     public interface ISharePointApiHelper
     {

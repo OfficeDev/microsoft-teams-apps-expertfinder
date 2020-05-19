@@ -22,7 +22,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder
         /// <param name="configuration">Object that passes the application configuration key-values.</param>
         /// <param name="logger">Instance to send logs to the Application Insights service.</param>
         /// <param name="conversationState">State management object for maintaining conversation state.</param>
-        public AdapterWithErrorHandler(IConfiguration configuration, ILogger<IBotFrameworkHttpAdapter> logger, ConversationState conversationState = null)
+        public AdapterWithErrorHandler(IConfiguration configuration, ILogger<IBotFrameworkHttpAdapter> logger, ConversationState conversationState)
             : base(configuration)
         {
             this.OnTurnError = async (turnContext, exception) =>
@@ -35,6 +35,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder
 
                 if (conversationState != null)
                 {
+                    logger.LogTrace($"Clearing conversation state for {turnContext.Activity?.Conversation?.Id}");
                     try
                     {
                         // Delete the conversationState for the current conversation to prevent the

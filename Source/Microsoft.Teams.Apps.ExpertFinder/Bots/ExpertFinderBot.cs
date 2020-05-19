@@ -34,9 +34,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
     /// <summary>
     /// Class that handles the teams activity of Expert Finder bot and messaging extension.
     /// </summary>
-    /// <typeparam name="T">Generic class.</typeparam>
-    public class ExpertFinderBot<T> : TeamsActivityHandler
-        where T : Dialog
+    public class ExpertFinderBot : TeamsActivityHandler
     {
         /// <summary>
         /// Messaging extension result type.
@@ -54,9 +52,9 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
         private const string MessagingExtensionAuthType = "auth";
 
         /// <summary>
-        /// Microsoft Graph api base uri.
+        /// Microsoft Graph resource URI.
         /// </summary>
-        private const string GraphAPIBaseURL = "https://graph.microsoft.com";
+        private const string GraphResourceUri = "https://graph.microsoft.com";
 
         /// <summary>
         /// Messaging extension default parameter value.
@@ -76,7 +74,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
         // Async retry policy that will wait and retry as many times as there are provided sleep durations which is
         // an exponentially backing-off, jittered manner, making sure to mitigate any correlations.
         private static readonly AsyncRetryPolicy RetryPolicy = Policy.Handle<HttpOperationException>()
-                      .WaitAndRetryAsync(Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromMilliseconds(1000), 5));
+            .WaitAndRetryAsync(Backoff.DecorrelatedJitterBackoffV2(TimeSpan.FromMilliseconds(1000), 5));
 
         /// <summary>
         /// State management object for maintaining conversation state.
@@ -86,7 +84,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
         /// <summary>
         /// Base class for all bot dialogs.
         /// </summary>
-        private readonly Dialog dialog;
+        private readonly Dialog rootDialog;
 
         /// <summary>
         /// State management object for maintaining user conversation state.
@@ -94,7 +92,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
         private readonly BotState userState;
 
         /// <summary>
-        /// Helper for working with Microsoft Graph api.
+        /// Helper for working with Microsoft Graph API.
         /// </summary>
         private readonly IGraphApiHelper graphApiHelper;
 
@@ -114,68 +112,44 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
         private readonly ILogger logger;
 
         /// <summary>
-        /// Application base uri.
-        /// </summary>
-        private readonly string appBaseUrl;
-
-        /// <summary>
-        /// Helper object for working with SharePoint rest api.
+        /// Helper object for working with SharePoint REST API.
         /// </summary>
         private readonly ISharePointApiHelper sharePointApiHelper;
 
         /// <summary>
-        /// AADv1 bot connection name.
-        /// </summary>
-        private readonly string connectionName;
-
-        /// <summary>
-        /// SharePoint site Uri.
-        /// </summary>
-        private readonly string sharePointSiteUri;
-
-        /// <summary>
-        /// Application Insights instrumentation key which we passes to client application.
-        /// </summary>
-        private readonly string appInsightsInstrumentationKey;
-
-        /// <summary>
-        /// Tenant id.
-        /// </summary>
-        private readonly string tenantId;
-
-        /// <summary>
         /// Represents a set of key/value application configuration properties for Expert Finder bot.
         /// </summary>
-        private readonly BotSettings options;
+        private readonly BotSettings botSettings;
+
+        private readonly IStatePropertyAccessor<DialogState> dialogStatePropertyAccessor;
+        private readonly IStatePropertyAccessor<UserData> userDataPropertyAccessor;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExpertFinderBot{T}"/> class.
+        /// Initializes a new instance of the <see cref="ExpertFinderBot"/> class.
         /// </summary>
         /// <param name="conversationState">State management object for maintaining conversation state.</param>
         /// <param name="userState">State management object for maintaining user conversation state.</param>
-        /// <param name="dialog">Base class for bot dialog.</param>
-        /// <param name="graphApiHelper">Helper for working with Microsoft Graph api.</param>
+        /// <param name="rootDialog">Root dialog.</param>
+        /// <param name="graphApiHelper">Helper for working with Microsoft Graph API.</param>
         /// <param name="tokenHelper">Helper for JWT token generation and validation.</param>
-        /// <param name="sharePointApiHelper">Helper object for working with SharePoint rest api.</param>
-        /// <param name="optionsAccessor">A set of key/value application configuration properties for Expert Finder bot.</param>
+        /// <param name="sharePointApiHelper">Helper object for working with SharePoint REST API.</param>
+        /// <param name="botSettings">A set of key/value application configuration properties for Expert Finder bot.</param>
         /// <param name="customTokenHelper">Helper for AAD token generation.</param>
         /// <param name="logger">Instance to send logs to the Application Insights service.</param>
-        public ExpertFinderBot(ConversationState conversationState, UserState userState, T dialog, IGraphApiHelper graphApiHelper, ITokenHelper tokenHelper, ISharePointApiHelper sharePointApiHelper, ICustomTokenHelper customTokenHelper, IOptionsMonitor<BotSettings> optionsAccessor, ILogger<ExpertFinderBot<T>> logger)
+        public ExpertFinderBot(ConversationState conversationState, UserState userState, MainDialog rootDialog, IGraphApiHelper graphApiHelper, ITokenHelper tokenHelper, ISharePointApiHelper sharePointApiHelper, ICustomTokenHelper customTokenHelper, IOptionsMonitor<BotSettings> botSettings, ILogger<ExpertFinderBot> logger)
         {
             this.conversationState = conversationState;
             this.userState = userState;
-            this.dialog = dialog;
+            this.rootDialog = rootDialog;
             this.graphApiHelper = graphApiHelper;
             this.tokenHelper = tokenHelper;
             this.sharePointApiHelper = sharePointApiHelper;
-            this.options = optionsAccessor.CurrentValue;
-            this.appBaseUrl = this.options.AppBaseUri;
-            this.connectionName = this.options.ConnectionName;
-            this.sharePointSiteUri = this.options.SharePointSiteUrl;
-            this.appInsightsInstrumentationKey = this.options.AppInsightsInstrumentationKey;
-            this.tenantId = this.options.TenantId;
+            this.botSettings = botSettings.CurrentValue;
             this.customTokenHelper = customTokenHelper;
             this.logger = logger;
+
+            this.dialogStatePropertyAccessor = this.conversationState.CreateProperty<DialogState>(nameof(DialogState));
+            this.userDataPropertyAccessor = this.conversationState.CreateProperty<UserData>("ConversationData");    // For compatibility with v1 of Expert Finder
         }
 
         /// <summary>
@@ -188,14 +162,13 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
         {
             if (!this.IsActivityFromExpectedTenant(turnContext))
             {
-                this.logger.LogInformation($"Unexpected tenant Id {turnContext.Activity.Conversation.TenantId}", SeverityLevel.Warning);
-                await turnContext.SendActivityAsync(activity: MessageFactory.Text(Strings.InvalidTenant)).ConfigureAwait(false);
+                this.logger.LogInformation($"Unexpected tenant id {turnContext.Activity.Conversation.TenantId}", SeverityLevel.Warning);
+                await turnContext.SendActivityAsync(MessageFactory.Text(Strings.InvalidTenant)).ConfigureAwait(false);
             }
             else
             {
                 // Get the current culture info to use in resource files
                 string locale = turnContext.Activity.Entities?.Where(t => t.Type == "clientInfo").First().Properties["locale"].ToString();
-
                 if (!string.IsNullOrEmpty(locale))
                 {
                     CultureInfo.CurrentCulture = CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(locale);
@@ -204,8 +177,8 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
                 await base.OnTurnAsync(turnContext, cancellationToken).ConfigureAwait(false);
 
                 // Save any state changes that might have occured during the turn.
-                await this.conversationState.SaveChangesAsync(turnContext: turnContext, force: false, cancellationToken: cancellationToken).ConfigureAwait(false);
-                await this.userState.SaveChangesAsync(turnContext: turnContext, force: false, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await this.conversationState.SaveChangesAsync(turnContext, false, cancellationToken).ConfigureAwait(false);
+                await this.userState.SaveChangesAsync(turnContext, false, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -217,7 +190,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
         /// <returns>A task that represents the work queued to execute.</returns>
         protected override async Task OnTeamsSigninVerifyStateAsync(ITurnContext<IInvokeActivity> turnContext, CancellationToken cancellationToken)
         {
-            await this.dialog.RunAsync(turnContext, this.conversationState.CreateProperty<DialogState>(nameof(DialogState)), cancellationToken).ConfigureAwait(false);
+            await this.rootDialog.RunAsync(turnContext, this.dialogStatePropertyAccessor, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -231,38 +204,13 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
             try
             {
                 var activity = turnContext.Activity;
-
-                // if card from messaging extension is sent to the bot conversation.
-                if (activity.Attachments != null)
-                {
-                    return;
-                }
-                else
-                {
-                    var command = activity.Text;
-                    await this.SendTypingIndicatorAsync(turnContext).ConfigureAwait(false);
-                    if (activity.Text == null && activity.Value != null && activity.Type == ActivityTypes.Message)
-                    {
-                        command = JToken.Parse(activity.Value.ToString()).SelectToken("command").ToString();
-                    }
-
-                    switch (command.ToUpperInvariant().Trim())
-                    {
-                        case Constants.MyProfile:
-                            await this.dialog.RunAsync(turnContext, this.conversationState.CreateProperty<DialogState>(nameof(DialogState)), cancellationToken).ConfigureAwait(false);
-                            break;
-                        case Constants.Search:
-                            await this.dialog.RunAsync(turnContext, this.conversationState.CreateProperty<DialogState>(nameof(DialogState)), cancellationToken).ConfigureAwait(false);
-                            break;
-                        default:
-                            await turnContext.SendActivityAsync(MessageFactory.Attachment(HelpCard.GetHelpCard())).ConfigureAwait(false);
-                            break;
-                    }
-                }
+                await this.SendTypingIndicatorAsync(turnContext).ConfigureAwait(false);
+                await this.rootDialog.RunAsync(turnContext, this.dialogStatePropertyAccessor, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
                 this.logger.LogError(ex, $"Error in message activity of bot for {turnContext.Activity.Conversation.Id}");
+                throw;
             }
         }
 
@@ -276,40 +224,19 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
         {
             var activity = turnContext.Activity;
-            this.logger.LogInformation($"conversationType: {activity.Conversation.ConversationType}, membersAdded: {activity.MembersAdded?.Count}, membersRemoved: {activity.MembersRemoved?.Count}");
+            this.logger.LogInformation($"conversationType: {activity.Conversation.ConversationType}, membersAdded: {membersAdded.Count}");
 
-            if (activity.MembersAdded.Where(member => member.Id != activity.Recipient.Id).FirstOrDefault() != null)
+            if (membersAdded.Where(member => member.Id != activity.Recipient.Id).FirstOrDefault() != null)
             {
                 this.logger.LogInformation($"Bot added {activity.Conversation.Id}");
-                var userStateAccessors = this.userState.CreateProperty<ConversationData>(nameof(ConversationData));
-                var userdata = await userStateAccessors.GetAsync(turnContext, () => new ConversationData()).ConfigureAwait(false);
-                if (userdata?.IsWelcomeCardSent == null || userdata?.IsWelcomeCardSent == false)
+                var userData = await this.userDataPropertyAccessor.GetAsync(turnContext, () => new UserData()).ConfigureAwait(false);
+                if (userData?.IsWelcomeCardSent == null || userData?.IsWelcomeCardSent == false)
                 {
-                    userdata.IsWelcomeCardSent = true;
-                    var userWelcomeCardAttachment = WelcomeCard.GetCard(this.appBaseUrl);
+                    var userWelcomeCardAttachment = WelcomeCard.GetCard(this.botSettings.AppBaseUri);
                     await turnContext.SendActivityAsync(MessageFactory.Attachment(userWelcomeCardAttachment)).ConfigureAwait(false);
+
+                    userData.IsWelcomeCardSent = true;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Invoked when members other than this bot (like a user) are removed from the conversation.
-        /// </summary>
-        /// <param name="membersRemoved">List of members removed.</param>
-        /// <param name="turnContext">Context object containing information cached for a single turn of conversation with a user.</param>
-        /// <param name="cancellationToken">Propagates notification that operations should be canceled.</param>
-        /// <returns>A task that represents the work queued to execute.</returns>
-        protected override async Task OnMembersRemovedAsync(IList<ChannelAccount> membersRemoved, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
-        {
-            var activity = turnContext?.Activity;
-
-            this.logger.LogInformation($"conversationType: {activity.Conversation.ConversationType}, membersAdded: {activity.MembersAdded?.Count}, membersRemoved: {activity.MembersRemoved?.Count}");
-            if (activity.MembersAdded.Where(member => member.Id != activity.Recipient.Id).FirstOrDefault() != null)
-            {
-                var userStateAccessors = this.userState.CreateProperty<ConversationData>(nameof(ConversationData));
-                var userdata = await userStateAccessors.GetAsync(turnContext, () => new ConversationData()).ConfigureAwait(false);
-                userdata.IsWelcomeCardSent = false;
-                await userStateAccessors.SetAsync(turnContext, userdata).ConfigureAwait(false);
             }
         }
 
@@ -328,13 +255,13 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
 
             try
             {
-                var userGraphAccessToken = await this.tokenHelper.GetUserTokenAsync(activity.From.Id, GraphAPIBaseURL).ConfigureAwait(false);
+                var userGraphAccessToken = await this.tokenHelper.GetUserTokenAsync(activity.From.Id, GraphResourceUri).ConfigureAwait(false);
 
                 if (userGraphAccessToken == null)
                 {
-                    await turnContext.SendActivityAsync(Strings.NotLoginText).ConfigureAwait(false);
-                    await this.dialog.RunAsync(turnContext, this.conversationState.CreateProperty<DialogState>(nameof(DialogState)), cancellationToken).ConfigureAwait(false);
-                    return default;
+                    await turnContext.SendActivityAsync(Strings.NotLoggedInText).ConfigureAwait(false);
+                    await this.rootDialog.RunAsync(turnContext, this.dialogStatePropertyAccessor, cancellationToken).ConfigureAwait(false);
+                    return null;
                 }
                 else
                 {
@@ -349,22 +276,22 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
                                 {
                                     Value = new TaskModuleTaskInfo()
                                     {
-                                        Url = $"{this.appBaseUrl}/?token={apiAuthToken}&telemetry={this.appInsightsInstrumentationKey}&theme=" + "{theme}",
+                                        Url = $"{this.botSettings.AppBaseUri}/?token={apiAuthToken}&telemetry={this.botSettings.AppInsightsInstrumentationKey}&theme={{theme}}",
                                         Height = TaskModuleHeight,
                                         Width = TaskModuleWidth,
                                         Title = Strings.SearchTaskModuleTitle,
                                     },
                                 },
                             };
+
                         case Constants.MyProfile:
                             this.logger.LogInformation("My profile fetch activity called");
                             var userProfileDetails = await this.graphApiHelper.GetUserProfileAsync(userGraphAccessToken).ConfigureAwait(false);
-
                             if (userProfileDetails == null)
                             {
-                                this.logger.LogInformation("UserProfile details obtained from graph api is null.");
+                                this.logger.LogInformation("User profile details obtained from Graph API is null.");
                                 await turnContext.SendActivityAsync(Strings.ErrorMessage).ConfigureAwait(false);
-                                return default;
+                                return null;
                             }
                             else
                             {
@@ -374,7 +301,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
                                     {
                                         Value = new TaskModuleTaskInfo()
                                         {
-                                            Card = MyProfileCard.GetEditProfileCard(userProfileDetails, userSearchTaskModuleDetails.MyProfileCardId, this.appBaseUrl),
+                                            Card = MyProfileCard.GetEditProfileCard(userProfileDetails, userSearchTaskModuleDetails.MyProfileCardId, this.botSettings.AppBaseUri),
                                             Height = TaskModuleHeight,
                                             Width = TaskModuleWidth,
                                             Title = Strings.EditProfileTitle,
@@ -386,14 +313,14 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
                         default:
                             this.logger.LogInformation($"Invalid command for task module fetch activity.Command is : {command} ");
                             await turnContext.SendActivityAsync(Strings.ErrorMessage).ConfigureAwait(false);
-                            return default;
+                            return null;
                     }
                 }
             }
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Error in fetch action of task module.");
-                return default;
+                return null;
             }
         }
 
@@ -413,34 +340,37 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
                 {
                     this.logger.LogInformation($"Request data obtained on task module submit action is null.");
                     await turnContext.SendActivityAsync(Strings.ErrorMessage).ConfigureAwait(false);
-                    return default;
+                    return null;
                 }
 
                 switch (valuesFromTaskModule.Command.ToUpperInvariant().Trim())
                 {
                     case Constants.MyProfile:
                         this.logger.LogInformation("Activity type is invoke submit from my profile command");
-                        await this.dialog.RunAsync(turnContext, this.conversationState.CreateProperty<DialogState>(nameof(DialogState)), cancellationToken).ConfigureAwait(false);
+                        await this.rootDialog.RunAsync(turnContext, this.dialogStatePropertyAccessor, cancellationToken).ConfigureAwait(false);
                         break;
+
                     case Constants.Search:
                         this.logger.LogInformation("Activity type is invoke submit from search command");
-                        List<IActivity> selectedUserActivities = new List<IActivity>();
-                        valuesFromTaskModule.UserProfiles.ForEach(userProfile => selectedUserActivities.Add(MessageFactory.Attachment(SearchCard.GetUserCard(userProfile))));
 
-                        // Bot is expected to send multiple user profile cards which may cross the threshold limit of bot messages/sec, hence adding the retry logic.
-                        await RetryPolicy.ExecuteAsync(async () =>
+                        foreach (var profile in valuesFromTaskModule.UserProfiles)
                         {
-                            await turnContext.SendActivitiesAsync(selectedUserActivities.ToArray(), cancellationToken).ConfigureAwait(false);
-                        }).ConfigureAwait(false);
+                            // Bot is expected to send multiple user profile cards which may cross the threshold limit of bot messages/sec, hence adding the retry logic.
+                            await RetryPolicy.ExecuteAsync(async () =>
+                            {
+                                await turnContext.SendActivityAsync(MessageFactory.Attachment(SearchCard.GetUserCard(profile)), cancellationToken).ConfigureAwait(false);
+                            }).ConfigureAwait(false);
+                        }
+
                         break;
                 }
 
-                return default;
+                return null;
             }
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Error in submit action of task module.");
-                return default;
+                return null;
             }
         }
 
@@ -464,11 +394,11 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
 
                     // Get access token for user.if already authenticated, we will get token.
                     // If user is not signed in, send sign in link in messaging extension.
-                    var tokenResponse = await (turnContext.Adapter as IUserTokenProvider).GetUserTokenAsync(turnContext, this.connectionName, messageExtensionQuery.State, cancellationToken).ConfigureAwait(false);
+                    var tokenResponse = await (turnContext.Adapter as IUserTokenProvider).GetUserTokenAsync(turnContext, this.botSettings.OAuthConnectionName, messageExtensionQuery.State, cancellationToken).ConfigureAwait(false);
 
                     if (tokenResponse == null)
                     {
-                        var signInLink = await (turnContext.Adapter as IUserTokenProvider).GetOauthSignInLinkAsync(turnContext, this.connectionName, cancellationToken).ConfigureAwait(false);
+                        var signInLink = await (turnContext.Adapter as IUserTokenProvider).GetOauthSignInLinkAsync(turnContext, this.botSettings.OAuthConnectionName, cancellationToken).ConfigureAwait(false);
                         return new MessagingExtensionResponse
                         {
                             ComposeExtension = new MessagingExtensionResult
@@ -482,7 +412,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
                                         {
                                             Type = ActionTypes.OpenUrl,
                                             Value = signInLink,
-                                            Title = Strings.SigninCardText,
+                                            Title = Strings.SignInCardText,
                                         },
                                     },
                                 },
@@ -496,16 +426,15 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Error in handling invoke action from messaging extension.");
+                return null;
             }
-
-            return default;
         }
 
         /// <summary>
         /// Handles messaging extension user search query request.
         /// </summary>
         /// <param name="turnContext">Provides context for a turn of a bot.</param>
-        /// <returns>A task that represents messaging extension response containing user profile details received from SharePoint api based on user search query.</returns>
+        /// <returns>A task that represents messaging extension response containing user profile details received from SharePoint API based on user search query.</returns>
         private async Task<MessagingExtensionResponse> HandleMessagingExtensionSearchQueryAsync(ITurnContext<IInvokeActivity> turnContext)
         {
             try
@@ -517,11 +446,11 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
                 this.logger.LogInformation($"searchQuery : {searchQuery} commandId : {messageExtensionQuery.CommandId}");
 
                 // Get SharePoint user access token.
-                var token = await this.tokenHelper.GetUserTokenAsync(activity.From.Id, this.sharePointSiteUri).ConfigureAwait(false);
+                var token = await this.tokenHelper.GetUserTokenAsync(activity.From.Id, this.botSettings.SharePointSiteUrl).ConfigureAwait(false);
                 if (string.IsNullOrEmpty(token))
                 {
                     this.logger.LogInformation($"Token not obtained while handling messaging extension query for {activity.Conversation.Id}.");
-                    return default;
+                    return null;
                 }
 
                 return new MessagingExtensionResponse
@@ -532,7 +461,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Exception while handling messaging extension query");
-                return default;
+                return null;
             }
         }
 
@@ -541,6 +470,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
         /// </summary>
         /// <param name="searchQuery">User search query text.</param>
         /// <param name="commandId">Messaging extension command id e.g. skills, interests, schools.</param>
+        /// <param name="token">User access token.</param>
         /// <returns>A task that represents compose extension result containing user profile details.</returns>
         private async Task<MessagingExtensionResult> GetSearchResultAsync(string searchQuery, string commandId, string token)
         {
@@ -558,7 +488,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
                 {
                     composeExtensionResult.Type = MessagingExtenstionResultType;
                     composeExtensionResult.AttachmentLayout = AttachmentLayoutTypes.List;
-                    var userProfiles = await this.sharePointApiHelper.GetUserProfilesAsync(searchQuery, new List<string>() { commandId }, token, this.sharePointSiteUri).ConfigureAwait(false);
+                    var userProfiles = await this.sharePointApiHelper.GetUserProfilesAsync(searchQuery, new List<string>() { commandId }, token, this.botSettings.SharePointSiteUrl).ConfigureAwait(false);
 
                     if (userProfiles.Count > 0)
                     {
@@ -566,7 +496,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
                     }
                     else
                     {
-                        this.logger.LogInformation("UserProfile obtained from sharepoint search service is null.");
+                        this.logger.LogInformation("User profile obtained from sharepoint search service is null.");
                     }
                 }
 
@@ -586,17 +516,9 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
         /// <returns>A task that represents typing indicator activity.</returns>
         private async Task SendTypingIndicatorAsync(ITurnContext turnContext)
         {
-            try
-            {
-                var typingActivity = turnContext.Activity.CreateReply();
-                typingActivity.Type = ActivityTypes.Typing;
-                await turnContext.SendActivityAsync(typingActivity);
-            }
-            catch (Exception ex)
-            {
-                // Do not fail on errors sending the typing indicator
-                this.logger.LogWarning(ex, $"Failed to send a typing indicator: {ex.Message}");
-            }
+            var typingActivity = turnContext.Activity.CreateReply();
+            typingActivity.Type = ActivityTypes.Typing;
+            await turnContext.SendActivityAsync(typingActivity).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -606,7 +528,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
         /// <returns>A boolean, true if tenant provided is expexted tenant.</returns>
         private bool IsActivityFromExpectedTenant(ITurnContext turnContext)
         {
-            return turnContext.Activity.Conversation.TenantId.Equals(this.tenantId, StringComparison.OrdinalIgnoreCase);
+            return turnContext.Activity.Conversation.TenantId.Equals(this.botSettings.TenantId, StringComparison.OrdinalIgnoreCase);
         }
     }
 }
