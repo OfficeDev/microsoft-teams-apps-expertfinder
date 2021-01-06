@@ -6,7 +6,7 @@
 		"@microsoft/applicationinsights-react-js": "^2.3.1",
 		"@microsoft/teams-js": "^1.5.2",
 		"@stardust-ui/react": "^0.40.4",
-		"axios": "^0.19.0",
+		"axios": "^0.21.1",
 		"msteams-ui-icons-react": "^0.4.2",
 		"node-sass": "^4.14.1",
 		"react": "^16.12.0",
