@@ -102,7 +102,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder
             var activity = stepContext.Context.Activity;
             if (activity.Type == ActivityTypes.Message)
             {
-                switch (activity.Text?.Trim())
+                switch (activity.Text?.Trim().ToUpperInvariant())
                 {
                     case Constants.MyProfile:
                     case Constants.Search:
@@ -174,7 +174,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder
                         await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(SearchCard.GetSearchCard())).ConfigureAwait(false);
                         break;
                     default:
-                        await this.EditProfileAsync(token, stepContext, cancellationToken).ConfigureAwait(false);
+                        await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(HelpCard.GetHelpCard())).ConfigureAwait(false);
                         break;
                 }
             }
