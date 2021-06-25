@@ -118,195 +118,195 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MyProfileTitle" xml:space="preserve">
-    <value>My profile</value>
+    <value>我的個人資料</value>
     <comment>My profile button text shown on welcome card and help card</comment>
   </data>
   <data name="SearchTitle" xml:space="preserve">
-    <value>Search</value>
+    <value>搜尋</value>
     <comment>Search button text to show on welcome card , helpcard and search card.</comment>
   </data>
   <data name="AboutMeTitle" xml:space="preserve">
-    <value>About me</value>
+    <value>關於我</value>
     <comment>Input field label used on My profile adaptive card for About me attribute</comment>
   </data>
   <data name="DetailsTitle" xml:space="preserve">
-    <value>View more</value>
+    <value>檢視更多</value>
     <comment>CTA show card button text that shows additional details on user profile card</comment>
   </data>
   <data name="EditProfileTitle" xml:space="preserve">
-    <value>Edit profile</value>
+    <value>編輯個人資料</value>
     <comment>Button text that invokes Edit profile dialog from My profile adaptive card</comment>
   </data>
   <data name="FullNameTitle" xml:space="preserve">
-    <value>Name</value>
+    <value>名稱</value>
     <comment>Input field label used on My profile adaptive card for Name attribute</comment>
   </data>
   <data name="GotoProfileTitle" xml:space="preserve">
-    <value>Go to profile</value>
+    <value>移至個人資料</value>
     <comment>Button text that allows users to navigate to AAD user profile web page</comment>
   </data>
   <data name="InterestTitle" xml:space="preserve">
-    <value>Interests</value>
+    <value>興趣</value>
     <comment>Input field label used on My profile adaptive card for Interests attribute</comment>
   </data>
   <data name="SchoolsTitle" xml:space="preserve">
-    <value>Schools</value>
+    <value>學校</value>
     <comment>Input field label used on My profile adaptive card for Schools attribute</comment>
   </data>
   <data name="SkillsTitle" xml:space="preserve">
-    <value>Skills</value>
+    <value>技能</value>
     <comment>Input field label used on My profile adaptive card for Skills attribute</comment>
   </data>
   <data name="UpdateTitle" xml:space="preserve">
-    <value>Update</value>
+    <value>更新</value>
     <comment>Submit action button text on My profile adaptive card</comment>
   </data>
   <data name="WelcomeCardContent" xml:space="preserve">
-    <value>I can help you find people in your organization with specific expertise and skills. If it’s in their profile, I can find it! Here’s what you can do:</value>
+    <value>我可以使用特定的專業知識與技能，協助您尋找貴組織中的人員。如果是在他們的個人資料中，我可以找出! 以下是您可以執行的動作:</value>
     <comment>Text to show on welcome card</comment>
   </data>
   <data name="SearchWelcomeCardContent" xml:space="preserve">
-    <value>Filter for individuals by skills, interests, and other attributes in their profiles.</value>
+    <value>依個人資料中的技能、興趣和其他屬性篩選個人。</value>
     <comment>Welcome card text for Search command</comment>
   </data>
   <data name="WelcomeText" xml:space="preserve">
-    <value>Welcome!</value>
+    <value>歡迎!</value>
     <comment>Welcome card header text</comment>
   </data>
   <data name="SearchCardContent" xml:space="preserve">
-    <value>Click **Search** to filter for individuals by skills, interests, and other attributes in their profiles.</value>
+    <value>按一下 [**搜尋**]，依個人資料中的技能、興趣和其他屬性篩選個人。。</value>
     <comment>Suggestive text on card that invokes Search dialog task module</comment>
   </data>
   <data name="NotLoggedInText" xml:space="preserve">
-    <value>To search for experts, you’ll need to sign in.</value>
+    <value>若要搜尋專家，您必須登入。</value>
     <comment>Text to show if user is not logged in.</comment>
   </data>
   <data name="ChatTitle" xml:space="preserve">
-    <value>Start a chat</value>
+    <value>開始聊天</value>
     <comment>Button text to start a chat with user selected from search feature.</comment>
   </data>
   <data name="NoneText" xml:space="preserve">
-    <value>None</value>
+    <value>無</value>
     <comment>Default text which is shown when any of the user attributes are empty in user profile card</comment>
   </data>
   <data name="AboutMePlaceHolderText" xml:space="preserve">
-    <value>Enter information (300 characters max)</value>
+    <value>輸入資訊 (最多 300 個字元)</value>
     <comment>Ghost text for About me input field in Edit profile adaptive card.</comment>
   </data>
   <data name="SkillsPlaceHolderText" xml:space="preserve">
-    <value>Enter information (100 characters max)</value>
+    <value>輸入資訊 (最多 100 個字元)</value>
     <comment>Ghost text for Skills input field in Edit profile adaptive card</comment>
   </data>
   <data name="SchoolsPlaceHolderText" xml:space="preserve">
-    <value>Enter information (200 characters max)</value>
+    <value>輸入資訊 (最多 200 個字元)</value>
     <comment>Ghost text for Schools input field in Edit profile adaptive card</comment>
   </data>
   <data name="ValidationTaskModuleMessage" xml:space="preserve">
-    <value>Use semicolons between each item in the fields below.</value>
+    <value>請在下方欄位中的每個項目之間使用分號。</value>
     <comment>Validation text for multiple values supported input field s shown on My profile adaptive card.</comment>
   </data>
   <data name="EmptyProfileCardContent" xml:space="preserve">
-    <value>Please update your profile so your colleagues know what you do.</value>
+    <value>請更新您的個人資料，讓同事知道您的工作。</value>
     <comment>Text to show on empty profile card.</comment>
   </data>
   <data name="ErrorMessage" xml:space="preserve">
-    <value>Something went wrong. Try again in a few minutes.</value>
+    <value>發生錯誤。請在數分鐘後再試一次。</value>
     <comment>Generic error message.</comment>
   </data>
   <data name="LoginSuccessText" xml:space="preserve">
-    <value>Login is successful!</value>
+    <value>登入成功!</value>
     <comment>Text to show when login is successful</comment>
   </data>
   <data name="SignInCardText" xml:space="preserve">
-    <value>To search for experts, you’ll need to sign in.</value>
+    <value>若要搜尋專家，您必須登入。</value>
     <comment>Text to show on sign in card</comment>
   </data>
   <data name="SignOutText" xml:space="preserve">
-    <value>You have been signed out.</value>
+    <value>您已登出。</value>
     <comment>Text to show when user is signed out.</comment>
   </data>
   <data name="SignInButtonText" xml:space="preserve">
-    <value>Sign in</value>
+    <value>登入</value>
     <comment>Text to show on Sign in button in sign in card.</comment>
   </data>
   <data name="DefaultCardContentME" xml:space="preserve">
-    <value>Type a keyword to find people with that information in their profile.</value>
+    <value>輸入關鍵字，以在他們的個人資料中尋找具有該資訊的人員。</value>
     <comment>Text to show for default values in messaging extension.</comment>
   </data>
   <data name="FailedToUpdateProfile" xml:space="preserve">
-    <value>Something went wrong and I couldn’t update your profile. Try again in a few minutes.</value>
+    <value>發生錯誤，因此無法更新您的設定檔。請在數分鐘後再試一次。</value>
     <comment>Text for error message when updating user profile api failed</comment>
   </data>
   <data name="HelpMessage" xml:space="preserve">
-    <value>I can help you find people in your organization with specific expertise and skills. Here’s what you can do:</value>
+    <value>我可以使用特定的專業知識與技能，協助您尋找貴組織中的人員。以下是您可以執行的動作:</value>
     <comment>Text to show on help card.</comment>
   </data>
   <data name="InterestsPlaceHolderText" xml:space="preserve">
-    <value>Enter information (100 characters max)</value>
+    <value>輸入資訊 (最多 100 個字元)</value>
     <comment>Ghost text for Interests input field in Edit profile adaptive card</comment>
   </data>
   <data name="SearchTaskModuleTitle" xml:space="preserve">
-    <value>Search for experts</value>
+    <value>搜尋專家</value>
     <comment>Task module title that allows user to search for experts within the organization</comment>
   </data>
   <data name="InvalidTenant" xml:space="preserve">
-    <value>Sorry! You don't seem to be a user in the organization for which I was set up.</value>
+    <value>對不起! 您似乎不是我設定的組織中的使用者。</value>
     <comment>Message to be shown if tenant id doesn't match with authorized tenant</comment>
   </data>
   <data name="MyProfileWelcomeCardContent" xml:space="preserve">
-    <value>See how your profile looks to others. Update your profile with skills, interests, and schools.</value>
+    <value>查看您個人資料的外觀。使用技能、興趣與學校更新您的個人資料。</value>
     <comment>Welcome card text for My profile command</comment>
   </data>
   <data name="InitialSearchResultMessageBodyText" xml:space="preserve">
-    <value>Hint: Type a skill (like “data visualization”), interest (“hiking”), or the name of a school to find people with that information in their profile.</value>
+    <value>提示: 輸入技能 (如「資料視覺效果」)、興趣 (「健行」)，或是學校的名稱，以在他們的個人資料中尋找該資訊的人員。</value>
     <comment>Suggestive text for users on search for experts task module</comment>
   </data>
   <data name="InitialSearchResultMessageHeaderText" xml:space="preserve">
-    <value>Here are list of things one can do:</value>
+    <value>以下是您可以執行的工作清單:</value>
     <comment>Initial search result header suggestive text on search for experts task module</comment>
   </data>
   <data name="MaxUserProfilesError" xml:space="preserve">
-    <value>You can select up to 5 user profiles.</value>
+    <value>您最多可以選取 5 個使用者個人資料。</value>
     <comment>Error message when user selects more than 5 user profiles from the search result on search for experts task module</comment>
   </data>
   <data name="SearchResultNoItemsText" xml:space="preserve">
-    <value>No results found. Try a different keyword.</value>
+    <value>找不到結果。請嘗試其他關鍵字。</value>
     <comment>Error message when search result returns 0 records on search for experts task module</comment>
   </data>
   <data name="SearchTextBoxPlaceholder" xml:space="preserve">
-    <value>Type a term to search for</value>
+    <value>輸入要搜尋的字詞</value>
     <comment>Ghost text for search box on search for experts task module</comment>
   </data>
   <data name="ViewButtonText" xml:space="preserve">
-    <value>View</value>
+    <value>檢視</value>
     <comment>View button text to view selected user profiles on search for experts task module</comment>
   </data>
   <data name="ForbiddenErrorMessage" xml:space="preserve">
-    <value>Sorry, seems like you don't have permission to access this page.</value>
+    <value>很抱歉，您似乎沒有存取此頁面的許可權。</value>
     <comment>Error message if user do not have permission to view the requested resource.</comment>
   </data>
   <data name="GeneralErrorMessage" xml:space="preserve">
-    <value>Oops! An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact your administrator if the problem persists.</value>
+    <value>糟糕! 似乎發生未預期的錯誤。要不要試試看重新整理您的頁面? 或者如果問題持續發生，請連絡您的系統管理員。</value>
     <comment>Error message when something unexpected happened.</comment>
   </data>
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
-    <value>Sorry, an error occurred while trying to access this service.</value>
+    <value>很抱歉，嘗試存取此服務時發生錯誤。</value>
     <comment>Error message if user is unauthozed to access api</comment>
   </data>
   <data name="RefreshLinkText" xml:space="preserve">
-    <value>Refresh</value>
+    <value>重新整理</value>
     <comment>Refresh link text that will be shown on error page</comment>
   </data>
   <data name="BotCommandLogout" xml:space="preserve">
-    <value>Logout</value>
+    <value>登出</value>
     <comment>Bot command Logout. This needs to be matched with manifest's command "Logout" in translated json file.</comment>
   </data>
   <data name="BotCommandMyProfile" xml:space="preserve">
-    <value>My profile</value>
+    <value>我的設定檔</value>
     <comment>Bot command My Profile. This needs to be matched with manifest's command "My Profile" in translated json file.</comment>
   </data>
   <data name="BotCommandSearch" xml:space="preserve">
-    <value>Search</value>
+    <value>搜尋</value>
     <comment>Bot command Search. This needs to be matched with manifest's command "Search" in translated json file.</comment>
   </data>
 </root>

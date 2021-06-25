@@ -161,21 +161,21 @@ namespace Microsoft.Teams.Apps.ExpertFinder
             // signin/verifyState activity name used here to send my profile card after successful sign in.
             if ((activity.Type == MessageActivityType) || (activity.Name == SignInActivityName))
             {
-                var command = ((string)stepContext.Values["command"]).ToUpperInvariant().Trim();
+                var command = ((string)stepContext.Values["command"]).Trim();
 
-                switch (command)
+                if (command.Equals(Strings.BotCommandMyProfile, StringComparison.CurrentCultureIgnoreCase))
                 {
-                    case Constants.MyProfile:
-                        this.logger.LogInformation("My profile command triggered", new Dictionary<string, string>() { { "User", activity.From.Id }, { "AADObjectId", activity.From.AadObjectId } });
-                        await this.MyProfileAsync(token, stepContext, cancellationToken).ConfigureAwait(false);
-                        break;
-                    case Constants.Search:
-                        this.logger.LogInformation("Search command triggered", new Dictionary<string, string>() { { "User", activity.From.Id }, { "AADObjectId", activity.From.AadObjectId } });
-                        await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(SearchCard.GetSearchCard())).ConfigureAwait(false);
-                        break;
-                    default:
-                        await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(HelpCard.GetHelpCard())).ConfigureAwait(false);
-                        break;
+                    this.logger.LogInformation("My profile command triggered", new Dictionary<string, string>() { { "User", activity.From.Id }, { "AADObjectId", activity.From.AadObjectId } });
+                    await this.MyProfileAsync(token, stepContext, cancellationToken).ConfigureAwait(false);
+                }
+                else if (command.Equals(Strings.BotCommandSearch, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    this.logger.LogInformation("Search command triggered", new Dictionary<string, string>() { { "User", activity.From.Id }, { "AADObjectId", activity.From.AadObjectId } });
+                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(SearchCard.GetSearchCard())).ConfigureAwait(false);
+                }
+                else
+                {
+                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(HelpCard.GetHelpCard())).ConfigureAwait(false);
                 }
             }
 

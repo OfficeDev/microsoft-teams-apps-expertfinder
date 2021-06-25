@@ -79,6 +79,33 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        public static string BotCommandLogout {
+            get {
+                return ResourceManager.GetString("BotCommandLogout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My profile.
+        /// </summary>
+        public static string BotCommandMyProfile {
+            get {
+                return ResourceManager.GetString("BotCommandMyProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string BotCommandSearch {
+            get {
+                return ResourceManager.GetString("BotCommandSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start a chat.
         /// </summary>
         internal static string ChatTitle {

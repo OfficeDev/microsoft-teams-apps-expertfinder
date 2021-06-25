@@ -118,195 +118,195 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MyProfileTitle" xml:space="preserve">
-    <value>My profile</value>
+    <value>ملف التعريف الخاص بي</value>
     <comment>My profile button text shown on welcome card and help card</comment>
   </data>
   <data name="SearchTitle" xml:space="preserve">
-    <value>Search</value>
+    <value>بحث</value>
     <comment>Search button text to show on welcome card , helpcard and search card.</comment>
   </data>
   <data name="AboutMeTitle" xml:space="preserve">
-    <value>About me</value>
+    <value>معلومات عني</value>
     <comment>Input field label used on My profile adaptive card for About me attribute</comment>
   </data>
   <data name="DetailsTitle" xml:space="preserve">
-    <value>View more</value>
+    <value>عرض المزيد</value>
     <comment>CTA show card button text that shows additional details on user profile card</comment>
   </data>
   <data name="EditProfileTitle" xml:space="preserve">
-    <value>Edit profile</value>
+    <value>تحرير ملف التعريف</value>
     <comment>Button text that invokes Edit profile dialog from My profile adaptive card</comment>
   </data>
   <data name="FullNameTitle" xml:space="preserve">
-    <value>Name</value>
+    <value>الاسم</value>
     <comment>Input field label used on My profile adaptive card for Name attribute</comment>
   </data>
   <data name="GotoProfileTitle" xml:space="preserve">
-    <value>Go to profile</value>
+    <value>الانتقال إلى ملف التعريف</value>
     <comment>Button text that allows users to navigate to AAD user profile web page</comment>
   </data>
   <data name="InterestTitle" xml:space="preserve">
-    <value>Interests</value>
+    <value>الاهتمامات</value>
     <comment>Input field label used on My profile adaptive card for Interests attribute</comment>
   </data>
   <data name="SchoolsTitle" xml:space="preserve">
-    <value>Schools</value>
+    <value>المؤسسات التعليمية</value>
     <comment>Input field label used on My profile adaptive card for Schools attribute</comment>
   </data>
   <data name="SkillsTitle" xml:space="preserve">
-    <value>Skills</value>
+    <value>المهارات</value>
     <comment>Input field label used on My profile adaptive card for Skills attribute</comment>
   </data>
   <data name="UpdateTitle" xml:space="preserve">
-    <value>Update</value>
+    <value>تحديث</value>
     <comment>Submit action button text on My profile adaptive card</comment>
   </data>
   <data name="WelcomeCardContent" xml:space="preserve">
-    <value>I can help you find people in your organization with specific expertise and skills. If it’s in their profile, I can find it! Here’s what you can do:</value>
+    <value>يمكنني مساعدتك على البحث عن الأشخاص في مؤسستك الذين يتمتعون بخبرات ومهارات معينة. فإذا كانت في ملفهم التعريفي، يمكنني العثور عليها! وستجد فيما يلي ما يمكنك فعله:</value>
     <comment>Text to show on welcome card</comment>
   </data>
   <data name="SearchWelcomeCardContent" xml:space="preserve">
-    <value>Filter for individuals by skills, interests, and other attributes in their profiles.</value>
+    <value>قم بتصفية الأشخاص حسب المهارات والاهتمامات والسمات الأخرى في ملفات التعريف الخاصة بهم.</value>
     <comment>Welcome card text for Search command</comment>
   </data>
   <data name="WelcomeText" xml:space="preserve">
-    <value>Welcome!</value>
+    <value>مرحباً!</value>
     <comment>Welcome card header text</comment>
   </data>
   <data name="SearchCardContent" xml:space="preserve">
-    <value>Click **Search** to filter for individuals by skills, interests, and other attributes in their profiles.</value>
+    <value>انقر فوق **البحث** لتصفية الأشخاص حسب المهارات والاهتمامات والسمات الأخرى في ملفات التعريف الخاصة بهم.</value>
     <comment>Suggestive text on card that invokes Search dialog task module</comment>
   </data>
   <data name="NotLoggedInText" xml:space="preserve">
-    <value>To search for experts, you’ll need to sign in.</value>
+    <value>للبحث عن خبراء، ستحتاج إلى تسجيل الدخول.</value>
     <comment>Text to show if user is not logged in.</comment>
   </data>
   <data name="ChatTitle" xml:space="preserve">
-    <value>Start a chat</value>
+    <value>بدء دردشة</value>
     <comment>Button text to start a chat with user selected from search feature.</comment>
   </data>
   <data name="NoneText" xml:space="preserve">
-    <value>None</value>
+    <value>بدون</value>
     <comment>Default text which is shown when any of the user attributes are empty in user profile card</comment>
   </data>
   <data name="AboutMePlaceHolderText" xml:space="preserve">
-    <value>Enter information (300 characters max)</value>
+    <value>أدخل معلومات (300 حرف بحد أقصى)</value>
     <comment>Ghost text for About me input field in Edit profile adaptive card.</comment>
   </data>
   <data name="SkillsPlaceHolderText" xml:space="preserve">
-    <value>Enter information (100 characters max)</value>
+    <value>أدخل معلومات (100 حرف بحد أقصى)</value>
     <comment>Ghost text for Skills input field in Edit profile adaptive card</comment>
   </data>
   <data name="SchoolsPlaceHolderText" xml:space="preserve">
-    <value>Enter information (200 characters max)</value>
+    <value>أدخل معلومات (200 حرف بحد أقصى)</value>
     <comment>Ghost text for Schools input field in Edit profile adaptive card</comment>
   </data>
   <data name="ValidationTaskModuleMessage" xml:space="preserve">
-    <value>Use semicolons between each item in the fields below.</value>
+    <value>ضع فواصل منقوطة بين كل العناصر في الحقول أدناه.</value>
     <comment>Validation text for multiple values supported input field s shown on My profile adaptive card.</comment>
   </data>
   <data name="EmptyProfileCardContent" xml:space="preserve">
-    <value>Please update your profile so your colleagues know what you do.</value>
+    <value>الرجاء تحديث ملف التعريف الخاص بك ليعرف زملاؤك طبيعة عملك.</value>
     <comment>Text to show on empty profile card.</comment>
   </data>
   <data name="ErrorMessage" xml:space="preserve">
-    <value>Something went wrong. Try again in a few minutes.</value>
+    <value>حدث خطا ما. حاول مره أخرى بعد بضع دقائق.</value>
     <comment>Generic error message.</comment>
   </data>
   <data name="LoginSuccessText" xml:space="preserve">
-    <value>Login is successful!</value>
+    <value>نجحت عملية تسجيل الدخول!</value>
     <comment>Text to show when login is successful</comment>
   </data>
   <data name="SignInCardText" xml:space="preserve">
-    <value>To search for experts, you’ll need to sign in.</value>
+    <value>للبحث عن خبراء، ستحتاج إلى تسجيل الدخول.</value>
     <comment>Text to show on sign in card</comment>
   </data>
   <data name="SignOutText" xml:space="preserve">
-    <value>You have been signed out.</value>
+    <value>تم تسجيل خروجك.</value>
     <comment>Text to show when user is signed out.</comment>
   </data>
   <data name="SignInButtonText" xml:space="preserve">
-    <value>Sign in</value>
+    <value>تسجيل الدخول</value>
     <comment>Text to show on Sign in button in sign in card.</comment>
   </data>
   <data name="DefaultCardContentME" xml:space="preserve">
-    <value>Type a keyword to find people with that information in their profile.</value>
+    <value>اكتب كلمة أساسية للعثور على الأشخاص الذين لديهم هذه المعلومات في ملف التعريف الخاص بهم.</value>
     <comment>Text to show for default values in messaging extension.</comment>
   </data>
   <data name="FailedToUpdateProfile" xml:space="preserve">
-    <value>Something went wrong and I couldn’t update your profile. Try again in a few minutes.</value>
+    <value>حدث خطأ ما وتعذر تحديث ملف التعريف الخاص بك. حاول مجدداً بعد بضع دقائق.</value>
     <comment>Text for error message when updating user profile api failed</comment>
   </data>
   <data name="HelpMessage" xml:space="preserve">
-    <value>I can help you find people in your organization with specific expertise and skills. Here’s what you can do:</value>
+    <value>يمكنني مساعدتك على البحث عن الأشخاص في مؤسستك الذين يتمتعون بخبرات ومهارات معينة. ستجد فيما يلي ما يمكنك فعله:</value>
     <comment>Text to show on help card.</comment>
   </data>
   <data name="InterestsPlaceHolderText" xml:space="preserve">
-    <value>Enter information (100 characters max)</value>
+    <value>أدخل معلومات (100 حرف بحد أقصى)</value>
     <comment>Ghost text for Interests input field in Edit profile adaptive card</comment>
   </data>
   <data name="SearchTaskModuleTitle" xml:space="preserve">
-    <value>Search for experts</value>
+    <value>بحث عن خبراء</value>
     <comment>Task module title that allows user to search for experts within the organization</comment>
   </data>
   <data name="InvalidTenant" xml:space="preserve">
-    <value>Sorry! You don't seem to be a user in the organization for which I was set up.</value>
+    <value>عذراً! لا يبدو أنك من ضمن المستخدمين في المؤسسة التي تم تعييني لها.</value>
     <comment>Message to be shown if tenant id doesn't match with authorized tenant</comment>
   </data>
   <data name="MyProfileWelcomeCardContent" xml:space="preserve">
-    <value>See how your profile looks to others. Update your profile with skills, interests, and schools.</value>
+    <value>شاهد كيف يبدو ملفك التعريفي للآخرين. قم بتحديث ملفك التعريفي بالمهارات والاهتمامات والمؤسسات التعليمية.</value>
     <comment>Welcome card text for My profile command</comment>
   </data>
   <data name="InitialSearchResultMessageBodyText" xml:space="preserve">
-    <value>Hint: Type a skill (like “data visualization”), interest (“hiking”), or the name of a school to find people with that information in their profile.</value>
+    <value>تلميح: اكتب مهارة (مثل "مرئيات البيانات") أو "الاهتمام" ("اقدام") أو اسم مدرسه للعثور علي الأشخاص الذين لديهم هذه المعلومات في ملف التعريف الخاص بهم.</value>
     <comment>Suggestive text for users on search for experts task module</comment>
   </data>
   <data name="InitialSearchResultMessageHeaderText" xml:space="preserve">
-    <value>Here are list of things one can do:</value>
+    <value>ستجد فيما يلي قائمة بما يمكنك فعله:</value>
     <comment>Initial search result header suggestive text on search for experts task module</comment>
   </data>
   <data name="MaxUserProfilesError" xml:space="preserve">
-    <value>You can select up to 5 user profiles.</value>
+    <value>يمكنك تحديد ما يصل إلى 5 ملفات تعريف مستخدمين.</value>
     <comment>Error message when user selects more than 5 user profiles from the search result on search for experts task module</comment>
   </data>
   <data name="SearchResultNoItemsText" xml:space="preserve">
-    <value>No results found. Try a different keyword.</value>
+    <value>لم يتم العثور على أي نتائج. حاول استخدام كلمة أساسية مختلفة.</value>
     <comment>Error message when search result returns 0 records on search for experts task module</comment>
   </data>
   <data name="SearchTextBoxPlaceholder" xml:space="preserve">
-    <value>Type a term to search for</value>
+    <value>اكتب مصطلحاً للبحث عنه</value>
     <comment>Ghost text for search box on search for experts task module</comment>
   </data>
   <data name="ViewButtonText" xml:space="preserve">
-    <value>View</value>
+    <value>عرض</value>
     <comment>View button text to view selected user profiles on search for experts task module</comment>
   </data>
   <data name="ForbiddenErrorMessage" xml:space="preserve">
-    <value>Sorry, seems like you don't have permission to access this page.</value>
+    <value>عذرا ، يبدو انه ليس لديك اذن بالوصول إلى هذه الصفحة.</value>
     <comment>Error message if user do not have permission to view the requested resource.</comment>
   </data>
   <data name="GeneralErrorMessage" xml:space="preserve">
-    <value>Oops! An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact your administrator if the problem persists.</value>
+    <value>عفوًا! يبدو أن خطأ غير متوقع قد حدث. لمَ لا تحاول تحديث الصفحة؟ أو يمكنك الاتصال بالمسؤول لديك إذا استمرت المشكلة.</value>
     <comment>Error message when something unexpected happened.</comment>
   </data>
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
-    <value>Sorry, an error occurred while trying to access this service.</value>
+    <value>عذرا ، حدث خطا اثناء محاولة الوصول إلى هذه الخدمة.</value>
     <comment>Error message if user is unauthozed to access api</comment>
   </data>
   <data name="RefreshLinkText" xml:space="preserve">
-    <value>Refresh</value>
+    <value>تحديث</value>
     <comment>Refresh link text that will be shown on error page</comment>
   </data>
   <data name="BotCommandLogout" xml:space="preserve">
-    <value>Logout</value>
+    <value>تسجيل الخروج</value>
     <comment>Bot command Logout. This needs to be matched with manifest's command "Logout" in translated json file.</comment>
   </data>
   <data name="BotCommandMyProfile" xml:space="preserve">
-    <value>My profile</value>
+    <value>ملف التعريف الخاص بي</value>
     <comment>Bot command My Profile. This needs to be matched with manifest's command "My Profile" in translated json file.</comment>
   </data>
   <data name="BotCommandSearch" xml:space="preserve">
-    <value>Search</value>
+    <value>بحث</value>
     <comment>Bot command Search. This needs to be matched with manifest's command "Search" in translated json file.</comment>
   </data>
 </root>

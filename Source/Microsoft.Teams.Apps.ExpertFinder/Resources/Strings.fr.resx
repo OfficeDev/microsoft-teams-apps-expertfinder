@@ -118,195 +118,199 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MyProfileTitle" xml:space="preserve">
-    <value>My profile</value>
+    <value>Mon profil</value>
     <comment>My profile button text shown on welcome card and help card</comment>
   </data>
   <data name="SearchTitle" xml:space="preserve">
-    <value>Search</value>
+    <value>Rechercher</value>
     <comment>Search button text to show on welcome card , helpcard and search card.</comment>
   </data>
   <data name="AboutMeTitle" xml:space="preserve">
-    <value>About me</value>
+    <value>À propos de moi</value>
     <comment>Input field label used on My profile adaptive card for About me attribute</comment>
   </data>
   <data name="DetailsTitle" xml:space="preserve">
-    <value>View more</value>
+    <value>Afficher plus</value>
     <comment>CTA show card button text that shows additional details on user profile card</comment>
   </data>
   <data name="EditProfileTitle" xml:space="preserve">
-    <value>Edit profile</value>
+    <value>Modifier le profil</value>
     <comment>Button text that invokes Edit profile dialog from My profile adaptive card</comment>
   </data>
   <data name="FullNameTitle" xml:space="preserve">
-    <value>Name</value>
+    <value>Nom</value>
     <comment>Input field label used on My profile adaptive card for Name attribute</comment>
   </data>
   <data name="GotoProfileTitle" xml:space="preserve">
-    <value>Go to profile</value>
+    <value>Accéder au profil</value>
     <comment>Button text that allows users to navigate to AAD user profile web page</comment>
   </data>
   <data name="InterestTitle" xml:space="preserve">
-    <value>Interests</value>
+    <value>Centres d'intérêts</value>
     <comment>Input field label used on My profile adaptive card for Interests attribute</comment>
   </data>
   <data name="SchoolsTitle" xml:space="preserve">
-    <value>Schools</value>
+    <value>Établissements scolaires</value>
     <comment>Input field label used on My profile adaptive card for Schools attribute</comment>
   </data>
   <data name="SkillsTitle" xml:space="preserve">
-    <value>Skills</value>
+    <value>Compétences</value>
     <comment>Input field label used on My profile adaptive card for Skills attribute</comment>
   </data>
   <data name="UpdateTitle" xml:space="preserve">
-    <value>Update</value>
+    <value>Mettre à jour</value>
     <comment>Submit action button text on My profile adaptive card</comment>
   </data>
   <data name="WelcomeCardContent" xml:space="preserve">
-    <value>I can help you find people in your organization with specific expertise and skills. If it’s in their profile, I can find it! Here’s what you can do:</value>
+    <value>Je peux vous aider à trouver des membres de votre organisation dotés d’une expertise et de compétences spécifiques. Si elle se trouve dans son profil, je peux la trouver. Voici ce que vous pouvez faire :</value>
     <comment>Text to show on welcome card</comment>
   </data>
   <data name="SearchWelcomeCardContent" xml:space="preserve">
-    <value>Filter for individuals by skills, interests, and other attributes in their profiles.</value>
+    <value>Filtrez les individus par compétences, intérêts et autres attributs dans leurs profils.</value>
     <comment>Welcome card text for Search command</comment>
   </data>
   <data name="WelcomeText" xml:space="preserve">
-    <value>Welcome!</value>
+    <value>Bienvenue !</value>
     <comment>Welcome card header text</comment>
   </data>
   <data name="SearchCardContent" xml:space="preserve">
-    <value>Click **Search** to filter for individuals by skills, interests, and other attributes in their profiles.</value>
+    <value>Cliquez sur * * Search * * pour filtrer les utilisateurs par compétences, centres d’intérêt et autres attributs dans leur profil.</value>
     <comment>Suggestive text on card that invokes Search dialog task module</comment>
   </data>
   <data name="NotLoggedInText" xml:space="preserve">
-    <value>To search for experts, you’ll need to sign in.</value>
+    <value>Pour rechercher des experts, vous devez vous connecter.</value>
     <comment>Text to show if user is not logged in.</comment>
   </data>
   <data name="ChatTitle" xml:space="preserve">
-    <value>Start a chat</value>
+    <value>Commencer une conversation</value>
     <comment>Button text to start a chat with user selected from search feature.</comment>
   </data>
   <data name="NoneText" xml:space="preserve">
-    <value>None</value>
+    <value>Aucun</value>
     <comment>Default text which is shown when any of the user attributes are empty in user profile card</comment>
   </data>
   <data name="AboutMePlaceHolderText" xml:space="preserve">
-    <value>Enter information (300 characters max)</value>
+    <value>Entrez les informations (200 caractères maximum)</value>
     <comment>Ghost text for About me input field in Edit profile adaptive card.</comment>
   </data>
   <data name="SkillsPlaceHolderText" xml:space="preserve">
-    <value>Enter information (100 characters max)</value>
+    <value>Entrez les informations (100 caractères maximum)</value>
     <comment>Ghost text for Skills input field in Edit profile adaptive card</comment>
   </data>
   <data name="SchoolsPlaceHolderText" xml:space="preserve">
-    <value>Enter information (200 characters max)</value>
+    <value>Entrez les informations (200 caractères maximum)</value>
     <comment>Ghost text for Schools input field in Edit profile adaptive card</comment>
   </data>
   <data name="ValidationTaskModuleMessage" xml:space="preserve">
-    <value>Use semicolons between each item in the fields below.</value>
+    <value>Utilisez des points-virgules entre chaque élément dans les champs ci-dessous.</value>
     <comment>Validation text for multiple values supported input field s shown on My profile adaptive card.</comment>
   </data>
   <data name="EmptyProfileCardContent" xml:space="preserve">
-    <value>Please update your profile so your colleagues know what you do.</value>
+    <value>Veuillez mettre à jour votre profil pour que vos collègues sachent ce que vous faites.</value>
     <comment>Text to show on empty profile card.</comment>
   </data>
   <data name="ErrorMessage" xml:space="preserve">
-    <value>Something went wrong. Try again in a few minutes.</value>
+    <value>Désolé... Nous avons rencontré un problème. Veuillez réessayer dans quelques minutes.</value>
     <comment>Generic error message.</comment>
   </data>
   <data name="LoginSuccessText" xml:space="preserve">
-    <value>Login is successful!</value>
+    <value>La connexion est réussie !</value>
     <comment>Text to show when login is successful</comment>
   </data>
   <data name="SignInCardText" xml:space="preserve">
-    <value>To search for experts, you’ll need to sign in.</value>
+    <value>Pour rechercher des experts, vous devez vous connecter.</value>
     <comment>Text to show on sign in card</comment>
   </data>
   <data name="SignOutText" xml:space="preserve">
-    <value>You have been signed out.</value>
+    <value>Vous avez été déconnecté.</value>
     <comment>Text to show when user is signed out.</comment>
   </data>
   <data name="SignInButtonText" xml:space="preserve">
-    <value>Sign in</value>
+    <value>Connexion</value>
     <comment>Text to show on Sign in button in sign in card.</comment>
   </data>
   <data name="DefaultCardContentME" xml:space="preserve">
-    <value>Type a keyword to find people with that information in their profile.</value>
+    <value>Tapez un mot clé pour rechercher des personnes disposant de ces informations dans leur profil.</value>
     <comment>Text to show for default values in messaging extension.</comment>
   </data>
   <data name="FailedToUpdateProfile" xml:space="preserve">
-    <value>Something went wrong and I couldn’t update your profile. Try again in a few minutes.</value>
+    <value>Nous n’avons pas pu mettre à jour votre profil, car nous avons rencontré un problème. Réessayez dans quelques minutes.</value>
     <comment>Text for error message when updating user profile api failed</comment>
   </data>
   <data name="HelpMessage" xml:space="preserve">
-    <value>I can help you find people in your organization with specific expertise and skills. Here’s what you can do:</value>
+    <value>Je peux vous aider à trouver des membres de votre organisation dotés d’une expertise et de compétences spécifiques. Voici ce que vous pouvez faire :</value>
     <comment>Text to show on help card.</comment>
   </data>
   <data name="InterestsPlaceHolderText" xml:space="preserve">
-    <value>Enter information (100 characters max)</value>
+    <value>Entrez les informations (100 caractères maximum)</value>
     <comment>Ghost text for Interests input field in Edit profile adaptive card</comment>
   </data>
   <data name="SearchTaskModuleTitle" xml:space="preserve">
-    <value>Search for experts</value>
+    <value>Rechercher des experts</value>
     <comment>Task module title that allows user to search for experts within the organization</comment>
   </data>
   <data name="InvalidTenant" xml:space="preserve">
-    <value>Sorry! You don't seem to be a user in the organization for which I was set up.</value>
+    <value>Désolé ! Il semble que vous ne soyez pas un utilisateur de l’Organisation pour laquelle j’ai été configuré.</value>
     <comment>Message to be shown if tenant id doesn't match with authorized tenant</comment>
   </data>
   <data name="MyProfileWelcomeCardContent" xml:space="preserve">
-    <value>See how your profile looks to others. Update your profile with skills, interests, and schools.</value>
+    <value>Afficher l’apparence de votre profil pour les autres utilisateurs. Mettez à jour votre profil avec les compétences, les centres d’intérêt et les établissements d’enseignement.</value>
     <comment>Welcome card text for My profile command</comment>
   </data>
   <data name="InitialSearchResultMessageBodyText" xml:space="preserve">
-    <value>Hint: Type a skill (like “data visualization”), interest (“hiking”), or the name of a school to find people with that information in their profile.</value>
+    <value>Conseil : tapez une compétence (par exemple, « visualisation des données »), un intérêt (« randonnée ») ou le nom d’une école pour trouver des personnes disposant de ces informations dans leur profil.</value>
     <comment>Suggestive text for users on search for experts task module</comment>
   </data>
   <data name="InitialSearchResultMessageHeaderText" xml:space="preserve">
-    <value>Here are list of things one can do:</value>
+    <value>Voici une liste des actions que l’on peut entreprendre :</value>
     <comment>Initial search result header suggestive text on search for experts task module</comment>
   </data>
   <data name="MaxUserProfilesError" xml:space="preserve">
-    <value>You can select up to 5 user profiles.</value>
+    <value>Vous pouvez sélectionner jusqu’à 5 profils utilisateur.</value>
     <comment>Error message when user selects more than 5 user profiles from the search result on search for experts task module</comment>
   </data>
   <data name="SearchResultNoItemsText" xml:space="preserve">
-    <value>No results found. Try a different keyword.</value>
+    <value>Aucun résultat trouvé. Essayez un autre mot clé.</value>
     <comment>Error message when search result returns 0 records on search for experts task module</comment>
   </data>
   <data name="SearchTextBoxPlaceholder" xml:space="preserve">
-    <value>Type a term to search for</value>
+    <value>Tapez un terme à rechercher</value>
     <comment>Ghost text for search box on search for experts task module</comment>
   </data>
   <data name="ViewButtonText" xml:space="preserve">
-    <value>View</value>
+    <value>Afficher</value>
     <comment>View button text to view selected user profiles on search for experts task module</comment>
   </data>
   <data name="ForbiddenErrorMessage" xml:space="preserve">
-    <value>Sorry, seems like you don't have permission to access this page.</value>
+    <value>Désolé, il semble que vous n’ayez pas l’autorisation d’accéder à cette page.</value>
     <comment>Error message if user do not have permission to view the requested resource.</comment>
   </data>
   <data name="GeneralErrorMessage" xml:space="preserve">
-    <value>Oops! An unexpected error seems to have occured. Why not try refreshing your page? Or you can contact your administrator if the problem persists.</value>
+    <value>Désolé. Une erreur inattendue semble s’être produite. Pourquoi ne pas essayer d’actualiser votre page ? Vous pouvez également contacter votre administrateur si le problème persiste.</value>
     <comment>Error message when something unexpected happened.</comment>
   </data>
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
-    <value>Sorry, an error occurred while trying to access this service.</value>
+    <value>Désolé, une erreur s’est produite lors de la tentative d’accès à ce service.</value>
     <comment>Error message if user is unauthozed to access api</comment>
   </data>
   <data name="RefreshLinkText" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Actualiser</value>
     <comment>Refresh link text that will be shown on error page</comment>
   </data>
+  <data name="ComposeExtensionsParametersSkillsDescription" xml:space="preserve">
+    <value>Rechercher des experts sur la base des compétences</value>
+    <comment>Compose extensions parameter skills description</comment>
+  </data>
   <data name="BotCommandLogout" xml:space="preserve">
-    <value>Logout</value>
+    <value>Déconnexion</value>
     <comment>Bot command Logout. This needs to be matched with manifest's command "Logout" in translated json file.</comment>
   </data>
   <data name="BotCommandMyProfile" xml:space="preserve">
-    <value>My profile</value>
+    <value>Mon profil</value>
     <comment>Bot command My Profile. This needs to be matched with manifest's command "My Profile" in translated json file.</comment>
   </data>
   <data name="BotCommandSearch" xml:space="preserve">
-    <value>Search</value>
+    <value>Rechercher</value>
     <comment>Bot command Search. This needs to be matched with manifest's command "Search" in translated json file.</comment>
   </data>
 </root>
