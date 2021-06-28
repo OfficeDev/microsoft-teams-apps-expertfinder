@@ -93,7 +93,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Dialogs
                 return null;
             }
 
-            if (LogoutCommands.Contains(text.ToUpperInvariant().Trim()) || text.Equals(Strings.BotCommandLogout, StringComparison.CurrentCultureIgnoreCase))
+            if (LogoutCommands.Contains(text.ToUpperInvariant().Trim()) || text.Trim().Equals(Strings.BotCommandLogout, StringComparison.CurrentCultureIgnoreCase))
             {
                 // The bot adapter encapsulates the authentication processes.
                 var botAdapter = (BotFrameworkAdapter)dialogContext.Context.Adapter;

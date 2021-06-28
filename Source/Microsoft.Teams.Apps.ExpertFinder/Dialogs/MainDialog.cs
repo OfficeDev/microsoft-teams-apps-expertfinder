@@ -102,16 +102,19 @@ namespace Microsoft.Teams.Apps.ExpertFinder
             var activity = stepContext.Context.Activity;
             if (activity.Type == ActivityTypes.Message)
             {
-                switch (activity.Text?.Trim().ToUpperInvariant())
+                if (activity.Text == null)
                 {
-                    case Constants.MyProfile:
-                    case Constants.Search:
-                    case null:
-                        return await stepContext.NextAsync();
-
-                    default:
-                        await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(HelpCard.GetHelpCard())).ConfigureAwait(false);
-                        return await stepContext.EndDialogAsync().ConfigureAwait(false);
+                    return await stepContext.NextAsync();
+                }
+                else if (activity.Text.Trim().Equals(Strings.BotCommandMyProfile, StringComparison.CurrentCultureIgnoreCase) ||
+                    activity.Text.Trim().Equals(Strings.BotCommandSearch, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return await stepContext.NextAsync();
+                }
+                else
+                {
+                    await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(HelpCard.GetHelpCard())).ConfigureAwait(false);
+                    return await stepContext.EndDialogAsync().ConfigureAwait(false);
                 }
             }
 
@@ -163,12 +166,12 @@ namespace Microsoft.Teams.Apps.ExpertFinder
             {
                 var command = ((string)stepContext.Values["command"]).Trim();
 
-                if (command.Equals(Strings.BotCommandMyProfile, StringComparison.CurrentCultureIgnoreCase))
+                if (command.Equals(Strings.BotCommandMyProfile, StringComparison.CurrentCultureIgnoreCase) || command.Equals(Constants.MyProfile))
                 {
                     this.logger.LogInformation("My profile command triggered", new Dictionary<string, string>() { { "User", activity.From.Id }, { "AADObjectId", activity.From.AadObjectId } });
                     await this.MyProfileAsync(token, stepContext, cancellationToken).ConfigureAwait(false);
                 }
-                else if (command.Equals(Strings.BotCommandSearch, StringComparison.CurrentCultureIgnoreCase))
+                else if (command.Equals(Strings.BotCommandSearch, StringComparison.CurrentCultureIgnoreCase) || command.Equals(Constants.Search))
                 {
                     this.logger.LogInformation("Search command triggered", new Dictionary<string, string>() { { "User", activity.From.Id }, { "AADObjectId", activity.From.AadObjectId } });
                     await stepContext.Context.SendActivityAsync(MessageFactory.Attachment(SearchCard.GetSearchCard())).ConfigureAwait(false);
