@@ -116,6 +116,28 @@
         "description": "The branch of the GitHub repository to deploy."
       },
       "defaultValue": "master"
+    },
+
+    "defaultCulture": {
+      "type": "string",
+      "allowedValues": [
+        "en",
+        "ar",
+        "de",
+        "es",
+        "fr",
+        "he",
+        "ja",
+        "ko",
+        "pt-BR",
+        "ru",
+        "zh-CN",
+        "zh-TW"
+      ],
+      "defaultValue": "en",
+      "metadata": {
+        "description": "Default localization for app."
+      }
     }
   },
   "variables": {
@@ -230,6 +252,14 @@
             {
               "name": "WEBSITE_NODE_DEFAULT_VERSION",
               "value": "10.15.2"
+            },
+            {
+              "name": "i18n:DefaultCulture",
+              "value": "[parameters('defaultCulture')]"
+            },
+            {
+              "name": "i18n:SupportedCultures",
+              "value": "en,ar,de,es,fr,he,ja,ko,pt-BR,ru,zh-CN,zh-TW"
             }
           ]
         }

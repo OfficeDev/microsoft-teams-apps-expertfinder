@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MyProfileTitle" xml:space="preserve">
+    <value>マイ プロフィール</value>
+    <comment>My profile button text shown on welcome card and help card</comment>
+  </data>
+  <data name="SearchTitle" xml:space="preserve">
+    <value>検索</value>
+    <comment>Search button text to show on welcome card , helpcard and search card.</comment>
+  </data>
+  <data name="AboutMeTitle" xml:space="preserve">
+    <value>コメント</value>
+    <comment>Input field label used on My profile adaptive card for About me attribute</comment>
+  </data>
+  <data name="DetailsTitle" xml:space="preserve">
+    <value>詳細を表示</value>
+    <comment>CTA show card button text that shows additional details on user profile card</comment>
+  </data>
+  <data name="EditProfileTitle" xml:space="preserve">
+    <value>プロフィールを編集</value>
+    <comment>Button text that invokes Edit profile dialog from My profile adaptive card</comment>
+  </data>
+  <data name="FullNameTitle" xml:space="preserve">
+    <value>名前</value>
+    <comment>Input field label used on My profile adaptive card for Name attribute</comment>
+  </data>
+  <data name="GotoProfileTitle" xml:space="preserve">
+    <value>プロフィールに移動</value>
+    <comment>Button text that allows users to navigate to AAD user profile web page</comment>
+  </data>
+  <data name="InterestTitle" xml:space="preserve">
+    <value>興味の対象</value>
+    <comment>Input field label used on My profile adaptive card for Interests attribute</comment>
+  </data>
+  <data name="SchoolsTitle" xml:space="preserve">
+    <value>学校</value>
+    <comment>Input field label used on My profile adaptive card for Schools attribute</comment>
+  </data>
+  <data name="SkillsTitle" xml:space="preserve">
+    <value>資格/特技</value>
+    <comment>Input field label used on My profile adaptive card for Skills attribute</comment>
+  </data>
+  <data name="UpdateTitle" xml:space="preserve">
+    <value>更新</value>
+    <comment>Submit action button text on My profile adaptive card</comment>
+  </data>
+  <data name="WelcomeCardContent" xml:space="preserve">
+    <value>特定の専門知識とスキルを備えた組織内の人々を見つけるお手伝いをします。 プロフィールにある情報なら見つけることができます。できることは次のとおりです。</value>
+    <comment>Text to show on welcome card</comment>
+  </data>
+  <data name="SearchWelcomeCardContent" xml:space="preserve">
+    <value>プロファイルのスキル、興味、その他の属性で個人をフィルターします。</value>
+    <comment>Welcome card text for Search command</comment>
+  </data>
+  <data name="WelcomeText" xml:space="preserve">
+    <value>ようこそ!</value>
+    <comment>Welcome card header text</comment>
+  </data>
+  <data name="SearchCardContent" xml:space="preserve">
+    <value>**検索** をクリックして、プロファイルのスキル、興味、その他の属性で個人をフィルターします。</value>
+    <comment>Suggestive text on card that invokes Search dialog task module</comment>
+  </data>
+  <data name="NotLoggedInText" xml:space="preserve">
+    <value>専門家を検索するには、サインインする必要があります。</value>
+    <comment>Text to show if user is not logged in.</comment>
+  </data>
+  <data name="ChatTitle" xml:space="preserve">
+    <value>チャットを開始する</value>
+    <comment>Button text to start a chat with user selected from search feature.</comment>
+  </data>
+  <data name="NoneText" xml:space="preserve">
+    <value>なし</value>
+    <comment>Default text which is shown when any of the user attributes are empty in user profile card</comment>
+  </data>
+  <data name="AboutMePlaceHolderText" xml:space="preserve">
+    <value>情報を入力してください (最大 300 文字)</value>
+    <comment>Ghost text for About me input field in Edit profile adaptive card.</comment>
+  </data>
+  <data name="SkillsPlaceHolderText" xml:space="preserve">
+    <value>情報を入力してください (最大 100 文字)</value>
+    <comment>Ghost text for Skills input field in Edit profile adaptive card</comment>
+  </data>
+  <data name="SchoolsPlaceHolderText" xml:space="preserve">
+    <value>情報を入力してください (最大 200 文字)</value>
+    <comment>Ghost text for Schools input field in Edit profile adaptive card</comment>
+  </data>
+  <data name="ValidationTaskModuleMessage" xml:space="preserve">
+    <value>以下のフィールドの各項目はセミコロンで区切ってください。</value>
+    <comment>Validation text for multiple values supported input field s shown on My profile adaptive card.</comment>
+  </data>
+  <data name="EmptyProfileCardContent" xml:space="preserve">
+    <value>プロフィールを更新して、同僚にあなたの行動を知らせてください。</value>
+    <comment>Text to show on empty profile card.</comment>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>問題が発生しました。数分後にもう一度お試しください。</value>
+    <comment>Generic error message.</comment>
+  </data>
+  <data name="LoginSuccessText" xml:space="preserve">
+    <value>ログインが成功しました</value>
+    <comment>Text to show when login is successful</comment>
+  </data>
+  <data name="SignInCardText" xml:space="preserve">
+    <value>専門家を検索するには、サインインする必要があります。</value>
+    <comment>Text to show on sign in card</comment>
+  </data>
+  <data name="SignOutText" xml:space="preserve">
+    <value>サインアウトされました。</value>
+    <comment>Text to show when user is signed out.</comment>
+  </data>
+  <data name="SignInButtonText" xml:space="preserve">
+    <value>サインイン</value>
+    <comment>Text to show on Sign in button in sign in card.</comment>
+  </data>
+  <data name="DefaultCardContentME" xml:space="preserve">
+    <value>キーワードを入力して、プロフィールにその情報を持つ人を見つけます。</value>
+    <comment>Text to show for default values in messaging extension.</comment>
+  </data>
+  <data name="FailedToUpdateProfile" xml:space="preserve">
+    <value>問題が発生したため、プロファイルを更新できませんでした。数分後にもう一度お試しください。</value>
+    <comment>Text for error message when updating user profile api failed</comment>
+  </data>
+  <data name="HelpMessage" xml:space="preserve">
+    <value>特定の専門知識とスキルを備えた組織内の人々を見つけるお手伝いをします。 できることは次のとおりです。</value>
+    <comment>Text to show on help card.</comment>
+  </data>
+  <data name="InterestsPlaceHolderText" xml:space="preserve">
+    <value>情報を入力してください (最大 100 文字)</value>
+    <comment>Ghost text for Interests input field in Edit profile adaptive card</comment>
+  </data>
+  <data name="SearchTaskModuleTitle" xml:space="preserve">
+    <value>専門家の検索</value>
+    <comment>Task module title that allows user to search for experts within the organization</comment>
+  </data>
+  <data name="InvalidTenant" xml:space="preserve">
+    <value>申し訳ありません。あなたは私が設定した組織内のユーザーではないようです。</value>
+    <comment>Message to be shown if tenant id doesn't match with authorized tenant</comment>
+  </data>
+  <data name="MyProfileWelcomeCardContent" xml:space="preserve">
+    <value>プロフィールが他の人にどのように見えるかを確認できます。プロフィールのスキル、興味、学校を更新します。</value>
+    <comment>Welcome card text for My profile command</comment>
+  </data>
+  <data name="InitialSearchResultMessageBodyText" xml:space="preserve">
+    <value>ヒント: プロフィールにその情報を持つ人を見つけるには、スキル ("データ視覚化" など)、関心 ("ハイキング")、学校名を入力します。</value>
+    <comment>Suggestive text for users on search for experts task module</comment>
+  </data>
+  <data name="InitialSearchResultMessageHeaderText" xml:space="preserve">
+    <value>できることのリストは次のとおりです。</value>
+    <comment>Initial search result header suggestive text on search for experts task module</comment>
+  </data>
+  <data name="MaxUserProfilesError" xml:space="preserve">
+    <value>最大 5 つのユーザー プロファイルを選択できます。</value>
+    <comment>Error message when user selects more than 5 user profiles from the search result on search for experts task module</comment>
+  </data>
+  <data name="SearchResultNoItemsText" xml:space="preserve">
+    <value>結果が見つかりません。 別のキーワードを試してください。</value>
+    <comment>Error message when search result returns 0 records on search for experts task module</comment>
+  </data>
+  <data name="SearchTextBoxPlaceholder" xml:space="preserve">
+    <value>検索する用語を入力してください</value>
+    <comment>Ghost text for search box on search for experts task module</comment>
+  </data>
+  <data name="ViewButtonText" xml:space="preserve">
+    <value>表示</value>
+    <comment>View button text to view selected user profiles on search for experts task module</comment>
+  </data>
+  <data name="ForbiddenErrorMessage" xml:space="preserve">
+    <value>申し訳ございません。このページにアクセスする権限がないようです。</value>
+    <comment>Error message if user do not have permission to view the requested resource.</comment>
+  </data>
+  <data name="GeneralErrorMessage" xml:space="preserve">
+    <value>予期しないエラーが発生した可能性があります。ページを最新の情報に更新してみてください。問題が解決しない場合は、管理者にお問い合わせください。</value>
+    <comment>Error message when something unexpected happened.</comment>
+  </data>
+  <data name="UnauthorizedErrorMessage" xml:space="preserve">
+    <value>申し訳ございません。このサービスにアクセスしようとしているときにエラーが発生しました。</value>
+    <comment>Error message if user is unauthozed to access api</comment>
+  </data>
+  <data name="RefreshLinkText" xml:space="preserve">
+    <value>最新の情報に更新</value>
+    <comment>Refresh link text that will be shown on error page</comment>
+  </data>
+  <data name="BotCommandLogout" xml:space="preserve">
+    <value>ログアウト</value>
+    <comment>Bot command Logout. This needs to be matched with manifest's command "Logout" in translated json file.</comment>
+  </data>
+  <data name="BotCommandMyProfile" xml:space="preserve">
+    <value>マイ プロフィール</value>
+    <comment>Bot command My Profile. This needs to be matched with manifest's command "My Profile" in translated json file.</comment>
+  </data>
+  <data name="BotCommandSearch" xml:space="preserve">
+    <value>検索</value>
+    <comment>Bot command Search. This needs to be matched with manifest's command "Search" in translated json file.</comment>
+  </data>
+  <data name="EndUserManifestFullDescription" xml:space="preserve">
+    <value>エキスパートの検索では、スキル、興味の対象、または通っていた学校に基づいてユーザーが組織内のエキスパートを検索できます。また、ユーザーはプロフィール情報を更新して、最新の状態にしておくことができます。</value>
+    <comment>{MaxLength=4000}
+End user manifest full description</comment>
+  </data>
+  <data name="EndUserManifestFullName" xml:space="preserve">
+    <value>エキスパートの検索</value>
+    <comment>{MaxLength=100}
+End user manifest full name</comment>
+  </data>
+  <data name="EndUserManifestShortDescription" xml:space="preserve">
+    <value>エキスパートの検索では、ユーザーがいくつかの属性に基づいてエキスパートを検索できます</value>
+    <comment>{MaxLength=80}
+End user manifest short description</comment>
+  </data>
+  <data name="EndUserManifestShortName" xml:space="preserve">
+    <value>エキスパートの検索</value>
+    <comment>{MaxLength=30}
+End user manifest short name</comment>
+  </data>
+</root>
