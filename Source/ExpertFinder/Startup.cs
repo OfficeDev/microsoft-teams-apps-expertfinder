@@ -6,12 +6,14 @@ namespace Microsoft.Teams.Apps.ExpertFinder
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Net.Http;
     using System.Text;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Localization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
     using Microsoft.Bot.Builder;
@@ -117,6 +119,26 @@ namespace Microsoft.Teams.Apps.ExpertFinder
             services.AddSingleton<IUserProfileActivityStorageHelper, UserProfileActivityStorageHelper>();
             services.AddSingleton(new OAuthClient(new MicrosoftAppCredentials(this.Configuration["MicrosoftAppId"], this.Configuration["MicrosoftAppPassword"])));
 
+            // Add i18n.
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var defaultCulture = CultureInfo.GetCultureInfo(this.Configuration["i18n:DefaultCulture"]);
+                var supportedCultures = this.Configuration["i18n:SupportedCultures"].Split(',')
+                    .Select(culture => CultureInfo.GetCultureInfo(culture))
+                    .ToList();
+
+                options.DefaultRequestCulture = new RequestCulture(defaultCulture);
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+
+                options.RequestCultureProviders = new List<IRequestCultureProvider>
+                {
+                    new BotLocalizationCultureProvider(),
+                };
+            });
+
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
             services.AddTransient<IBot, ExpertFinderBot>();
             services.AddApplicationInsightsTelemetry();
@@ -129,6 +151,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder
         /// <param name="env">Hosting Environment.</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseRequestLocalization();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

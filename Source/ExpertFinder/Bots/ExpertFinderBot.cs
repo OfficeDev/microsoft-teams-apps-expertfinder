@@ -167,13 +167,6 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
             }
             else
             {
-                // Get the current culture info to use in resource files
-                string locale = turnContext.Activity.Entities?.Where(t => t.Type == "clientInfo").First().Properties["locale"].ToString();
-                if (!string.IsNullOrEmpty(locale))
-                {
-                    CultureInfo.CurrentCulture = CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(locale);
-                }
-
                 await base.OnTurnAsync(turnContext, cancellationToken).ConfigureAwait(false);
 
                 // Save any state changes that might have occured during the turn.
@@ -276,7 +269,7 @@ namespace Microsoft.Teams.Apps.ExpertFinder.Bots
                                 {
                                     Value = new TaskModuleTaskInfo()
                                     {
-                                        Url = $"{this.botSettings.AppBaseUri}/?token={apiAuthToken}&telemetry={this.botSettings.AppInsightsInstrumentationKey}&theme={{theme}}",
+                                        Url = $"{this.botSettings.AppBaseUri}/?token={apiAuthToken}&telemetry={this.botSettings.AppInsightsInstrumentationKey}&theme={{theme}}&locale={{locale}}",
                                         Height = TaskModuleHeight,
                                         Width = TaskModuleWidth,
                                         Title = Strings.SearchTaskModuleTitle,

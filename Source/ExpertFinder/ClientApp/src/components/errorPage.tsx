@@ -6,7 +6,8 @@ import * as React from "react";
 import { RouteComponentProps, Link } from "react-router-dom";
 import { Text, Loader } from "@stardust-ui/react";
 import { IAppSettings } from "./searchUserWrapperPage";
-import { getErrorResourceStrings } from "../api/profileSearchApi";
+import { getResourceStrings } from "../api/profileSearchApi";
+import * as microsoftTeams from "@microsoft/teams-js";
 import "../styles/site.css";
 
 interface IResourceString {
@@ -22,6 +23,7 @@ interface errorPageState {
 }
 
 export class ErrorPage extends React.Component<RouteComponentProps, errorPageState> {
+    locale: string = "";
     private appSettings: IAppSettings = {
         telemetry: "",
         theme: "",
@@ -46,7 +48,18 @@ export class ErrorPage extends React.Component<RouteComponentProps, errorPageSta
     }
 
     async componentDidMount() {
-        let response = await getErrorResourceStrings(this.appSettings.token);
+        microsoftTeams.initialize();
+        microsoftTeams.getContext((context) => {
+            this.locale = context.locale;
+            this.getResourceStrings();
+        });
+    }
+
+    /**
+    *Get localized resource strings from API
+    */
+    async getResourceStrings() {
+        let response = await getResourceStrings(this.appSettings.token, this.locale);
 
         if (response.status === 200 && response.data) {
             this.setState({
@@ -62,8 +75,8 @@ export class ErrorPage extends React.Component<RouteComponentProps, errorPageSta
     }
 
     /**
-* Renders the component
-*/
+    * Renders the component
+    */
     public render(): JSX.Element {
 
         const params = this.props.match.params;

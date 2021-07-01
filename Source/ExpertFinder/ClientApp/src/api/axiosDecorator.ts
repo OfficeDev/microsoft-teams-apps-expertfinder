@@ -34,11 +34,15 @@ export class AxiosJWTDecorator {
 	*/
 	public async get<T = any, R = AxiosResponse<T>>(
 		url: string,
-		token?: string
+		token?: string,
+		locale?: string | null
 	): Promise<R> {
 		try {
 			let config: AxiosRequestConfig = axios.defaults;
 			config.headers["Authorization"] = `Bearer ${token}`;
+			if (locale) {
+				config.headers["Accept-Language"] = `${locale}`;
+			}
 			return await axios.get(url, config);
 		} catch (error) {
 			this.handleError(error);
